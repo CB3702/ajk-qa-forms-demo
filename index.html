@@ -179,6 +179,108 @@
     </main>
   </section>
 
+  <!-- FORM ENTRY -->
+  <section class="view" id="view-entry">
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="header-brand">
+          <div class="brand-mark small">AJK</div>
+          <div class="header-copy">
+            <h2>Form Entry</h2>
+            <p id="entryContextText">Project / scope / location / form</p>
+          </div>
+        </div>
+        <button class="btn btn-secondary btn-small" onclick="showView('forms')">Back</button>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <div class="entry-layout">
+        <aside class="context-panel">
+          <div class="panel-title">Record Context</div>
+
+          <div class="context-row">
+            <span class="context-label">Project</span>
+            <span class="context-value" id="ctxProject">—</span>
+          </div>
+          <div class="context-row">
+            <span class="context-label">Scope</span>
+            <span class="context-value" id="ctxScope">—</span>
+          </div>
+          <div class="context-row">
+            <span class="context-label">Location</span>
+            <span class="context-value" id="ctxLocation">—</span>
+          </div>
+          <div class="context-row">
+            <span class="context-label">Form</span>
+            <span class="context-value" id="ctxForm">—</span>
+          </div>
+          <div class="context-row">
+            <span class="context-label">User</span>
+            <span class="context-value" id="ctxUser">—</span>
+          </div>
+
+          <div class="hold-warning hidden" id="holdWarning">
+            Hold point form. Progression should remain controlled until review / approval.
+          </div>
+        </aside>
+
+        <section class="entry-panel">
+          <div class="entry-card">
+            <div class="entry-head">
+              <div>
+                <div class="eyebrow">Inspection Record</div>
+                <h3 id="entryFormTitle">Form Entry</h3>
+              </div>
+            </div>
+
+            <div class="entry-body">
+              <div class="form-grid">
+                <div>
+                  <label class="field-label" for="entryDate">Inspection Date</label>
+                  <input id="entryDate" type="date" />
+                </div>
+
+                <div>
+                  <label class="field-label" for="entryStatus">Result</label>
+                  <select id="entryStatus">
+                    <option value="pass">Pass</option>
+                    <option value="fail">Fail</option>
+                    <option value="hold">Hold Point</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="field-label" for="entryInspector">Inspector / Supervisor</label>
+                  <input id="entryInspector" type="text" placeholder="Enter name" />
+                </div>
+
+                <div>
+                  <label class="field-label" for="entryReference">Reference</label>
+                  <input id="entryReference" type="text" placeholder="Drawing ref / area ref / batch ref" />
+                </div>
+
+                <div class="full">
+                  <label class="field-label" for="entryChecks">Inspection Notes</label>
+                  <textarea id="entryChecks" rows="5" placeholder="Record the principal checks completed, observations, tolerances, issues or comments."></textarea>
+                </div>
+
+                <div class="full">
+                  <label class="field-label" for="entryActions">Actions / Follow-Up</label>
+                  <textarea id="entryActions" rows="4" placeholder="Record any follow-up action, rectification, re-test or escalation required."></textarea>
+                </div>
+              </div>
+
+              <div class="entry-actions">
+                <button class="btn btn-primary" onclick="submitEntry()">Submit Record</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </section>
+
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>
 </body>
