@@ -76,31 +76,26 @@ const FORM_LIBRARY = {
   ]
 };
 
+const SCOPE_META = {
+  screed: { title: "Screed", note: "Sub-floor screed works and testing." },
+  cb: { title: "Cradle & Batten", note: "Cradle and batten installation package." },
+  raf: { title: "Raised Access Floor", note: "Raised floor support and panel system." },
+  hw: { title: "Hardwood Flooring", note: "Hardwood flooring installation package." },
+  tiling: { title: "Tiling", note: "Floor tiling package and finish controls." }
+};
+
 let currentUser = null;
 let currentProject = null;
+let currentScope = null;
+let currentLocation = null;
 
-/* ---------- SAFE DEFAULTS ---------- */
-if (typeof users === "undefined" || !Array.isArray(users)) {
-  users = [{ name: "Chris" }, { name: "Matt" }, { name: "Rafal" }];
-}
+if (typeof users === "undefined" || !Array.isArray(users)) users = [{ name: "Chris" }, { name: "Matt" }, { name: "Rafal" }];
+if (typeof projects === "undefined" || !Array.isArray(projects)) projects = [];
+if (typeof locations === "undefined" || !Array.isArray(locations)) locations = [];
+if (typeof forms === "undefined" || !Array.isArray(forms)) forms = [];
+if (typeof actions === "undefined" || !Array.isArray(actions)) actions = [];
 
-if (typeof projects === "undefined" || !Array.isArray(projects)) {
-  projects = [];
-}
-
-if (typeof locations === "undefined" || !Array.isArray(locations)) {
-  locations = [];
-}
-
-if (typeof forms === "undefined" || !Array.isArray(forms)) {
-  forms = [];
-}
-
-if (typeof actions === "undefined" || !Array.isArray(actions)) {
-  actions = [];
-}
-
-function safeSave() {
+function safeSave(){
   if (typeof saveData === "function") {
     saveData();
   } else {
@@ -112,11 +107,7 @@ function safeSave() {
   }
 }
 
-function seedData() {
-  if (users.length === 0) {
-    users.push({ name: "Chris" }, { name: "Matt" }, { name: "Rafal" });
-  }
-
+function seedData(){
   if (projects.length === 0) {
     projects.push(
       { id: 1, name: "Television Centre Phase 2", code: "TVC2 / E901E", package: "Multiplex" },
@@ -137,16 +128,15 @@ function seedData() {
   safeSave();
 }
 
-function showView(name) {
+function showView(name){
   document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
   const target = document.getElementById("view-" + name);
   if (target) target.classList.add("active");
 }
 
-function buildLoginUsers() {
+function buildLoginUsers(){
   const loginUser = document.getElementById("loginUser");
   if (!loginUser) return;
-
   loginUser.innerHTML = "";
 
   users.forEach(u => {
@@ -157,7 +147,7 @@ function buildLoginUsers() {
   });
 }
 
-function login() {
+function login(){
   const loginUserEl = document.getElementById("loginUser");
   const selectedUser = loginUserEl ? loginUserEl.value : "";
 
@@ -167,34 +157,31 @@ function login() {
   }
 
   currentUser = selectedUser;
-
-  const welcome = document.getElementById("welcomeText");
-  if (welcome) welcome.textContent = "Welcome, " + currentUser;
-
+  document.getElementById("welcomeText").textContent = "Welcome, " + currentUser;
   renderProjectCards();
   showView("projects");
 }
 
-function logout() {
+function logout(){
   currentUser = null;
   currentProject = null;
+  currentScope = null;
+  currentLocation = null;
   showView("login");
 }
 
-function renderProjectCards() {
+function renderProjectCards(){
   const wrap = document.getElementById("projectCards");
-  if (!wrap) return;
-
   wrap.innerHTML = "";
 
   projects.forEach(project => {
     wrap.innerHTML += `
-      <div class="project-card">
-        <div class="project-card-top">
+      <div class="select-card">
+        <div class="select-card-top">
           <h4>${project.name}</h4>
           <p>${project.code || "Project Code"} · ${project.package || "Package"}</p>
         </div>
-        <div class="project-card-body">
+        <div class="select-card-body">
           <button class="btn btn-primary" onclick="selectProject(${project.id})">Open Project</button>
         </div>
       </div>
@@ -202,221 +189,178 @@ function renderProjectCards() {
   });
 }
 
-function selectProject(projectId) {
+function selectProject(projectId){
   currentProject = projects.find(p => String(p.id) === String(projectId));
-
-  if (!currentProject) {
-    alert("Project not found.");
-    return;
-  }
-
-  const title = document.getElementById("projectTitle");
-  const subtitle = document.getElementById("projectSubtitle");
-  const heroNote = document.getElementById("heroProjectNote");
-  const activeUserChip = document.getElementById("activeUserChip");
-
-  if (title) title.textContent = currentProject.name;
-  if (subtitle) subtitle.textContent = (currentProject.code || "Package") + " · " + (currentProject.package || "");
-  if (heroNote) heroNote.textContent = currentProject.code || "Live project";
-  if (activeUserChip) activeUserChip.textContent = currentUser || "User";
-
-  renderLocations();
-  updateFormTypeOptions();
-  renderFormsList();
-  renderDashboard();
-
-  showView("dashboard");
-}
-
-function renderLocations() {
-  const select = document.getElementById("locationSelect");
-  if (!select || !currentProject) return;
-
-  select.innerHTML = "";
-
-  const filtered = locations.filter(l => String(l.project) === String(currentProject.id));
-
-  if (filtered.length === 0) {
-    const o = document.createElement("option");
-    o.value = "";
-    o.text = "No rooms / areas loaded";
-    select.add(o);
-    return;
-  }
-
-  filtered.forEach(l => {
-    const o = document.createElement("option");
-    o.value = l.id;
-    o.text = l.name;
-    select.add(o);
-  });
-}
-
-function getActiveScope() {
-  const scopeEl = document.getElementById("scopeSelect");
-  return scopeEl ? scopeEl.value : "screed";
-}
-
-function updateFormTypeOptions() {
-  const formType = document.getElementById("formType");
-  if (!formType) return;
-
-  const scope = getActiveScope();
-  const items = FORM_LIBRARY[scope] || [];
-
-  formType.innerHTML = "";
-
-  items.forEach(item => {
-    const o = document.createElement("option");
-    o.value = `${item.code} ${item.title}`;
-    o.text = `${item.code} ${item.title}`;
-    formType.add(o);
-  });
-}
-
-function renderFormsList() {
-  const list = document.getElementById("formsList");
-  if (!list) return;
-
-  const scope = getActiveScope();
-  const items = FORM_LIBRARY[scope] || [];
-
-  list.innerHTML = "";
-
-  items.forEach(item => {
-    list.innerHTML += `
-      <div class="form-item">
-        <div class="form-item-title">${item.code} · ${item.title}</div>
-        <div class="form-item-meta">${item.note}${item.hold ? " · Hold Point" : ""}</div>
-      </div>
-    `;
-  });
-}
-
-function submitForm() {
-  if (!currentProject) {
-    alert("Select a project first.");
-    return;
-  }
-
-  const locationSelect = document.getElementById("locationSelect");
-  if (!locationSelect || !locationSelect.value) {
-    alert("No room / area available.");
-    return;
-  }
-
-  const scope = getActiveScope();
-  const type = document.getElementById("formType").value;
-  const status = document.getElementById("statusSelect").value;
-  const locationName = locationSelect.selectedOptions[0].text;
-
-  const form = {
-    id: Date.now(),
-    project: currentProject.id,
-    projectName: currentProject.name,
-    scope: scope,
-    type: type,
-    location: locationSelect.value,
-    locationName: locationName,
-    status: status,
-    user: currentUser
-  };
-
-  forms.push(form);
-
-  if (status !== "pass") {
-    actions.push({
-      id: Date.now() + 1,
-      project: currentProject.id,
-      title: type + " issue",
-      assigned: currentUser,
-      locationName: locationName,
-      scope: scope,
-      status: status === "hold" ? "hold" : "fail"
-    });
-  }
-
-  safeSave();
-  renderDashboard();
-}
-
-function renderDashboard() {
   if (!currentProject) return;
 
+  document.getElementById("overviewProjectTitle").textContent = currentProject.name;
+  document.getElementById("overviewProjectSub").textContent = `${currentProject.code || ""} · ${currentProject.package || ""}`;
+  document.getElementById("summaryProjectName").textContent = currentProject.name;
+  document.getElementById("summaryProjectCode").textContent = currentProject.code || "—";
+  document.getElementById("summaryProjectPackage").textContent = currentProject.package || "—";
+  document.getElementById("summaryUser").textContent = currentUser || "—";
+
+  renderOverviewStats();
+  showView("overview");
+}
+
+function renderOverviewStats(){
+  const wrap = document.getElementById("overviewStats");
   const projectForms = forms.filter(f => String(f.project) === String(currentProject.id));
-  const projectActions = actions.filter(a => String(a.project) === String(currentProject.id));
 
   const total = projectForms.length;
   const passes = projectForms.filter(f => f.status === "pass").length;
   const fails = projectForms.filter(f => f.status === "fail").length;
   const holds = projectForms.filter(f => f.status === "hold").length;
 
-  const stats = document.getElementById("stats");
-  if (stats) {
-    stats.innerHTML = `
-      <div class="stat-card">
-        <h4>Total Records</h4>
-        <div class="value">${total}</div>
-      </div>
-      <div class="stat-card pass">
-        <h4>Pass</h4>
-        <div class="value">${passes}</div>
-      </div>
-      <div class="stat-card fail">
-        <h4>Fail</h4>
-        <div class="value">${fails}</div>
-      </div>
-      <div class="stat-card hold">
-        <h4>Hold Points</h4>
-        <div class="value">${holds}</div>
-      </div>
-    `;
-  }
-
-  const actionWrap = document.getElementById("actions");
-  if (!actionWrap) return;
-
-  actionWrap.innerHTML = "";
-
-  if (projectActions.length === 0) {
-    actionWrap.innerHTML = `<div class="empty-state">No open actions recorded for this project.</div>`;
-    return;
-  }
-
-  projectActions
-    .slice()
-    .reverse()
-    .forEach(a => {
-      const klass = a.status === "hold" ? "hold" : "fail";
-      const label = a.status === "hold" ? "Hold Point" : "Fail";
-
-      actionWrap.innerHTML += `
-        <div class="action-item ${klass}">
-          <div class="action-top">
-            <div class="action-title">${a.title}</div>
-            <div class="badge ${klass}">${label}</div>
-          </div>
-          <div class="action-meta">
-            Assigned to: <strong>${a.assigned}</strong><br>
-            Location: <strong>${a.locationName}</strong><br>
-            Scope: <strong>${a.scope}</strong>
-          </div>
-        </div>
-      `;
-    });
+  wrap.innerHTML = `
+    <div class="stat-card">
+      <h4>Total Records</h4>
+      <div class="value">${total}</div>
+    </div>
+    <div class="stat-card pass">
+      <h4>Pass</h4>
+      <div class="value">${passes}</div>
+    </div>
+    <div class="stat-card fail">
+      <h4>Fail</h4>
+      <div class="value">${fails}</div>
+    </div>
+    <div class="stat-card hold">
+      <h4>Hold Points</h4>
+      <div class="value">${holds}</div>
+    </div>
+  `;
 }
 
-document.addEventListener("change", function(e) {
-  if (e.target && e.target.id === "scopeSelect") {
-    updateFormTypeOptions();
-    renderFormsList();
-  }
-});
+function goToScopes(){
+  if (!currentProject) return;
 
-function init() {
+  document.getElementById("scopeProjectTitle").textContent = `${currentProject.name} · ${currentProject.code || ""}`;
+  renderScopeCards();
+  showView("scopes");
+}
+
+function renderScopeCards(){
+  const wrap = document.getElementById("scopeCards");
+  wrap.innerHTML = "";
+
+  Object.keys(SCOPE_META).forEach(key => {
+    const scope = SCOPE_META[key];
+    wrap.innerHTML += `
+      <div class="select-card">
+        <div class="select-card-top">
+          <h4>${scope.title}</h4>
+          <p>${scope.note}</p>
+        </div>
+        <div class="select-card-body">
+          <button class="btn btn-primary" onclick="selectScope('${key}')">Select Scope</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function selectScope(scopeKey){
+  currentScope = scopeKey;
+  currentLocation = null;
+  document.getElementById("locationContextText").textContent = `${currentProject.name} · ${SCOPE_META[scopeKey].title}`;
+  renderLocationCards();
+  showView("locations");
+}
+
+function renderLocationCards(){
+  const wrap = document.getElementById("locationCards");
+  wrap.innerHTML = "";
+
+  const filtered = locations.filter(l => String(l.project) === String(currentProject.id));
+
+  filtered.forEach(location => {
+    wrap.innerHTML += `
+      <div class="select-card">
+        <div class="select-card-top">
+          <h4>${location.name}</h4>
+          <p>${SCOPE_META[currentScope].title}</p>
+        </div>
+        <div class="select-card-body">
+          <button class="btn btn-primary" onclick="selectLocation(${location.id})">Select Location</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function selectLocation(locationId){
+  currentLocation = locations.find(l => String(l.id) === String(locationId));
+  if (!currentLocation) return;
+
+  document.getElementById("formContextText").textContent =
+    `${currentProject.name} · ${SCOPE_META[currentScope].title} · ${currentLocation.name}`;
+
+  renderFormCards();
+  showView("forms");
+}
+
+function renderFormCards(){
+  const wrap = document.getElementById("formCards");
+  wrap.innerHTML = "";
+
+  const items = FORM_LIBRARY[currentScope] || [];
+
+  items.forEach(item => {
+    wrap.innerHTML += `
+      <div class="select-card">
+        <div class="select-card-top">
+          <h4>${item.code} · ${item.title}</h4>
+          <p>${item.note}</p>
+          ${item.hold ? `<span class="form-note hold">Hold Point</span>` : ``}
+        </div>
+        <div class="select-card-body">
+          <button class="btn btn-primary" onclick="submitForm('${item.code} · ${item.title}', ${item.hold ? `'hold'` : `'pass'`})">
+            Use Form
+          </button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function submitForm(formTitle, defaultStatus){
+  if (!currentProject || !currentScope || !currentLocation) return;
+
+  const form = {
+    id: Date.now(),
+    project: currentProject.id,
+    projectName: currentProject.name,
+    scope: currentScope,
+    type: formTitle,
+    location: currentLocation.id,
+    locationName: currentLocation.name,
+    status: defaultStatus,
+    user: currentUser
+  };
+
+  forms.push(form);
+
+  if (defaultStatus !== "pass") {
+    actions.push({
+      id: Date.now() + 1,
+      project: currentProject.id,
+      title: formTitle + " issue",
+      assigned: currentUser,
+      locationName: currentLocation.name,
+      scope: currentScope,
+      status: defaultStatus
+    });
+  }
+
+  safeSave();
+  selectProject(currentProject.id);
+}
+
+function init(){
   seedData();
   buildLoginUsers();
-  updateFormTypeOptions();
   showView("login");
 }
 
