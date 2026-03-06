@@ -8,142 +8,167 @@
 </head>
 <body>
 
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="brand">
-        <div class="brand-mark">AJK</div>
-        <div class="brand-text">
-          <h1>AJK Site Control</h1>
-          <p>Internal QA & package control platform</p>
+  <!-- LOGIN VIEW -->
+  <section class="view active" id="view-login">
+    <div class="login-shell">
+      <div class="login-card">
+        <div class="login-brand">
+          <div class="brand-mark">AJK</div>
+          <div class="brand-copy">
+            <h1>AJK Site Control</h1>
+            <p>Internal QA & package control platform</p>
+          </div>
         </div>
-      </div>
 
-      <div class="header-user">
-        <label for="userSelect">Active User</label>
-        <select id="userSelect"></select>
-      </div>
-    </div>
-  </header>
+        <div class="login-body">
+          <div class="eyebrow">Sign In</div>
 
-  <section class="hero-strip">
-    <div class="hero-inner">
-      <div>
-        <div class="eyebrow">Operational Dashboard</div>
-        <h2>Project QA, hold points, actions and live package visibility</h2>
-      </div>
-      <div class="hero-note">
-        Built for AJK internal use
+          <label class="field-label" for="loginUser">User</label>
+          <select id="loginUser"></select>
+
+          <label class="field-label" for="loginPassword">Password</label>
+          <input id="loginPassword" type="password" placeholder="Enter password" />
+
+          <button class="btn btn-primary" onclick="login()">Sign In</button>
+
+          <div class="login-note">
+            Demo access only for now. Projects and rooms will be preloaded.
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <main class="page-shell">
+  <!-- PROJECT PICKER -->
+  <section class="view" id="view-projects">
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="brand">
+          <div class="brand-mark small">AJK</div>
+          <div class="brand-text">
+            <h2>Project Selection</h2>
+            <p id="welcomeText">Welcome</p>
+          </div>
+        </div>
 
-    <section class="panel panel-dashboard">
-      <div class="panel-head">
+        <div class="header-actions">
+          <button class="btn btn-secondary btn-small" onclick="logout()">Log Out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <section class="hero-strip compact">
+        <div class="hero-inner">
+          <div>
+            <div class="eyebrow">Assigned Projects</div>
+            <h3>Select a live project to continue</h3>
+          </div>
+        </div>
+      </section>
+
+      <section class="project-grid" id="projectCards"></section>
+    </main>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section class="view" id="view-dashboard">
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="brand">
+          <div class="brand-mark small">AJK</div>
+          <div class="brand-text">
+            <h2 id="projectTitle">Project Dashboard</h2>
+            <p id="projectSubtitle">Package QA control</p>
+          </div>
+        </div>
+
+        <div class="header-actions dashboard-actions">
+          <div class="user-chip" id="activeUserChip">User</div>
+          <button class="btn btn-secondary btn-small" onclick="showView('projects')">Change Project</button>
+          <button class="btn btn-secondary btn-small" onclick="logout()">Log Out</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="hero-strip">
+      <div class="hero-inner">
         <div>
-          <div class="panel-kicker">Overview</div>
-          <h3>Dashboard</h3>
+          <div class="eyebrow">Operational Dashboard</div>
+          <h3>Forms, actions and hold points for the active project</h3>
         </div>
+        <div class="hero-note" id="heroProjectNote">Live project</div>
       </div>
-      <div id="stats" class="stats-grid"></div>
     </section>
 
-    <section class="content-grid">
+    <main class="page-shell">
+      <section class="stats-grid" id="stats"></section>
 
-      <div class="panel">
-        <div class="panel-head">
-          <div>
-            <div class="panel-kicker">Project Setup</div>
-            <h3>Create Project</h3>
+      <section class="content-grid">
+        <div class="panel panel-form">
+          <div class="panel-head">
+            <div>
+              <div class="panel-kicker">Inspection Entry</div>
+              <h3>Submit Form</h3>
+            </div>
+          </div>
+          <div class="panel-body">
+            <label class="field-label" for="scopeSelect">Scope</label>
+            <select id="scopeSelect">
+              <option value="screed">Screed</option>
+              <option value="cb">Cradle &amp; Batten</option>
+              <option value="raf">Raised Access Floor</option>
+              <option value="hw">Hardwood</option>
+              <option value="tiling">Tiling</option>
+            </select>
+
+            <label class="field-label" for="formType">Form Type</label>
+            <select id="formType">
+              <option>F01 Pre Pour</option>
+              <option>F04 SR Test</option>
+              <option>F05 Moisture Test</option>
+            </select>
+
+            <label class="field-label" for="locationSelect">Room / Area</label>
+            <select id="locationSelect"></select>
+
+            <label class="field-label" for="statusSelect">Result</label>
+            <select id="statusSelect">
+              <option value="pass">Pass</option>
+              <option value="fail">Fail</option>
+              <option value="hold">Hold Point</option>
+            </select>
+
+            <button class="btn btn-primary" onclick="submitForm()">Submit Record</button>
           </div>
         </div>
-        <div class="panel-body">
-          <label class="field-label" for="projectName">Project Name</label>
-          <input id="projectName" placeholder="e.g. Television Centre Phase 2" />
-          <button class="btn btn-primary" onclick="createProject()">Create Project</button>
-        </div>
-      </div>
 
-      <div class="panel">
-        <div class="panel-head">
-          <div>
-            <div class="panel-kicker">Current Working Project</div>
-            <h3>Projects</h3>
+        <div class="panel panel-forms">
+          <div class="panel-head">
+            <div>
+              <div class="panel-kicker">Available Controls</div>
+              <h3>Form Set</h3>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="forms-list" id="formsList"></div>
           </div>
         </div>
-        <div class="panel-body">
-          <label class="field-label" for="projectSelect">Select Project</label>
-          <select id="projectSelect"></select>
-        </div>
-      </div>
 
-      <div class="panel">
-        <div class="panel-head">
-          <div>
-            <div class="panel-kicker">Location Structure</div>
-            <h3>Create Location</h3>
+        <div class="panel panel-actions">
+          <div class="panel-head">
+            <div>
+              <div class="panel-kicker">Action Register</div>
+              <h3>Open Actions</h3>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div id="actions" class="actions-list"></div>
           </div>
         </div>
-        <div class="panel-body">
-          <label class="field-label" for="locationName">Plot / Level / Area</label>
-          <input id="locationName" placeholder="e.g. Plot E - Level 03 - Apt E3-12" />
-          <button class="btn btn-primary" onclick="createLocation()">Add Location</button>
-        </div>
-      </div>
-
-      <div class="panel panel-form">
-        <div class="panel-head">
-          <div>
-            <div class="panel-kicker">Inspection Entry</div>
-            <h3>Submit Form</h3>
-          </div>
-        </div>
-        <div class="panel-body">
-          <label class="field-label" for="scopeSelect">Scope</label>
-          <select id="scopeSelect">
-            <option value="screed">Screed</option>
-            <option value="cb">Cradle &amp; Batten</option>
-            <option value="raf">Raised Access Floor</option>
-            <option value="hw">Hardwood</option>
-            <option value="tiling">Tiling</option>
-          </select>
-
-          <label class="field-label" for="formType">Form Type</label>
-          <select id="formType">
-            <option>F01 Pre Pour</option>
-            <option>F04 SR Test</option>
-            <option>F05 Moisture Test</option>
-          </select>
-
-          <label class="field-label" for="locationSelect">Location</label>
-          <select id="locationSelect"></select>
-
-          <label class="field-label" for="statusSelect">Result</label>
-          <select id="statusSelect">
-            <option value="pass">Pass</option>
-            <option value="fail">Fail</option>
-            <option value="hold">Hold Point</option>
-          </select>
-
-          <button class="btn btn-primary" onclick="submitForm()">Submit Record</button>
-        </div>
-      </div>
-
-      <div class="panel panel-actions">
-        <div class="panel-head">
-          <div>
-            <div class="panel-kicker">Action Register</div>
-            <h3>Open Actions</h3>
-          </div>
-        </div>
-        <div class="panel-body">
-          <div id="actions" class="actions-list"></div>
-        </div>
-      </div>
-
-    </section>
-  </main>
+      </section>
+    </main>
+  </section>
 
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>
