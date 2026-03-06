@@ -88,6 +88,7 @@ let currentUser = null;
 let currentProject = null;
 let currentScope = null;
 let currentLocation = null;
+let currentForm = null;
 
 if (typeof users === "undefined" || !Array.isArray(users)) users = [{ name: "Chris" }, { name: "Matt" }, { name: "Rafal" }];
 if (typeof projects === "undefined" || !Array.isArray(projects)) projects = [];
@@ -167,6 +168,7 @@ function logout(){
   currentProject = null;
   currentScope = null;
   currentLocation = null;
+  currentForm = null;
   showView("login");
 }
 
@@ -264,6 +266,7 @@ function renderScopeCards(){
 function selectScope(scopeKey){
   currentScope = scopeKey;
   currentLocation = null;
+  currentForm = null;
   document.getElementById("locationContextText").textContent = `${currentProject.name} · ${SCOPE_META[scopeKey].title}`;
   renderLocationCards();
   showView("locations");
@@ -307,7 +310,7 @@ function renderFormCards(){
 
   const items = FORM_LIBRARY[currentScope] || [];
 
-  items.forEach(item => {
+  items.forEach((item, index) => {
     wrap.innerHTML += `
       <div class="select-card">
         <div class="select-card-top">
@@ -316,45 +319,86 @@ function renderFormCards(){
           ${item.hold ? `<span class="form-note hold">Hold Point</span>` : ``}
         </div>
         <div class="select-card-body">
-          <button class="btn btn-primary" onclick="submitForm('${item.code} · ${item.title}', ${item.hold ? `'hold'` : `'pass'`})">
-            Use Form
-          </button>
+          <button class="btn btn-primary" onclick="openFormEntry(${index})">Open Form</button>
         </div>
       </div>
     `;
   });
 }
 
-function submitForm(formTitle, defaultStatus){
-  if (!currentProject || !currentScope || !currentLocation) return;
+function openFormEntry(formIndex){
+  const items = FORM_LIBRARY[currentScope] || [];
+  currentForm = items[formIndex];
 
-  const form = {
+  if (!currentForm) return;
+
+  document.getElementById("entryContextText").textContent =
+    `${currentProject.name} · ${SCOPE_META[currentScope].title} · ${currentLocation.name} · ${currentForm.code}`;
+
+  document.getElementById("ctxProject").textContent = currentProject.name;
+  document.getElementById("ctxScope").textContent = SCOPE_META[currentScope].title;
+  document.getElementById("ctxLocation").textContent = currentLocation.name;
+  document.getElementById("ctxForm").textContent = `${currentForm.code} · ${currentForm.title}`;
+  document.getElementById("ctxUser").textContent = currentUser || "—";
+  document.getElementById("entryFormTitle").textContent = `${currentForm.code} · ${currentForm.title}`;
+
+  const holdWarning = document.getElementById("holdWarning");
+  if (currentForm.hold) {
+    holdWarning.classList.remove("hidden");
+    document.getElementById("entryStatus").value = "hold";
+  } else {
+    holdWarning.classList.add("hidden");
+    document.getElementById("entryStatus").value = "pass";
+  }
+
+  document.getElementById("entryDate").valueAsDate = new Date();
+  document.getElementById("entryInspector").value = currentUser || "";
+  document.getElementById("entryReference").value = "";
+  document.getElementById("entryChecks").value = "";
+  document.getElementById("entryActions").value = "";
+
+  showView("entry");
+}
+
+function submitEntry(){
+  if (!currentProject || !currentScope || !currentLocation || !currentForm) return;
+
+  const status = document.getElementById("entryStatus").value;
+  const record = {
     id: Date.now(),
     project: currentProject.id,
     projectName: currentProject.name,
     scope: currentScope,
-    type: formTitle,
+    scopeTitle: SCOPE_META[currentScope].title,
+    type: `${currentForm.code} · ${currentForm.title}`,
     location: currentLocation.id,
     locationName: currentLocation.name,
-    status: defaultStatus,
-    user: currentUser
+    status: status,
+    user: currentUser,
+    date: document.getElementById("entryDate").value,
+    inspector: document.getElementById("entryInspector").value,
+    reference: document.getElementById("entryReference").value,
+    checks: document.getElementById("entryChecks").value,
+    followUp: document.getElementById("entryActions").value
   };
 
-  forms.push(form);
+  forms.push(record);
 
-  if (defaultStatus !== "pass") {
+  if (status !== "pass") {
     actions.push({
       id: Date.now() + 1,
       project: currentProject.id,
-      title: formTitle + " issue",
+      title: `${currentForm.code} ${currentForm.title} issue`,
       assigned: currentUser,
       locationName: currentLocation.name,
       scope: currentScope,
-      status: defaultStatus
+      status: status,
+      notes: record.followUp
     });
   }
 
   safeSave();
+  alert("Record submitted.");
   selectProject(currentProject.id);
 }
 
