@@ -32,16 +32,16 @@ function makeGenericScopeForms(scopeTitle) {
     { code: "F00", title: "Benchmark Acceptance", note: `${scopeTitle} benchmark approval.`, hold: true, fields: GENERIC_FIELDS },
     { code: "F01", title: "Area Release Check", note: `Area release for ${scopeTitle.toLowerCase()} works.`, fields: GENERIC_FIELDS },
     { code: "F02", title: "Material Delivery Log", note: `Material receipt and verification for ${scopeTitle.toLowerCase()}.`, fields: GENERIC_FIELDS },
-    { code: "F03", title: "Substrate / Readiness Check", note: `Substrate and readiness review.`, fields: GENERIC_FIELDS },
-    { code: "F04", title: "Setting Out Hold Point", note: `Setting out approval before progression.`, hold: true, fields: GENERIC_FIELDS },
-    { code: "F05", title: "System Check", note: `System-specific compliance check.`, fields: GENERIC_FIELDS },
-    { code: "F06", title: "Level / Tolerance Record", note: `Tolerance and level verification.`, fields: GENERIC_FIELDS },
-    { code: "F07", title: "Installation Inspection", note: `Main installation QA record.`, fields: GENERIC_FIELDS },
-    { code: "F08", title: "Detail Check", note: `Local detail and interface review.`, fields: GENERIC_FIELDS },
-    { code: "F09", title: "Protection Review", note: `Protection and post-install review.`, fields: GENERIC_FIELDS },
-    { code: "F10", title: "Secondary Review", note: `Secondary readiness / interface review.`, fields: GENERIC_FIELDS },
-    { code: "F11", title: "Area Readiness Review", note: `Hold point prior to progression.`, hold: true, fields: GENERIC_FIELDS },
-    { code: "F12", title: "Final Release / Sign-Off", note: `Final release and sign-off.`, hold: true, fields: GENERIC_FIELDS }
+    { code: "F03", title: "Substrate / Readiness Check", note: "Substrate and readiness review.", fields: GENERIC_FIELDS },
+    { code: "F04", title: "Setting Out Hold Point", note: "Setting out approval before progression.", hold: true, fields: GENERIC_FIELDS },
+    { code: "F05", title: "System Check", note: "System-specific compliance check.", fields: GENERIC_FIELDS },
+    { code: "F06", title: "Level / Tolerance Record", note: "Tolerance and level verification.", fields: GENERIC_FIELDS },
+    { code: "F07", title: "Installation Inspection", note: "Main installation QA record.", fields: GENERIC_FIELDS },
+    { code: "F08", title: "Detail Check", note: "Local detail and interface review.", fields: GENERIC_FIELDS },
+    { code: "F09", title: "Protection Review", note: "Protection and post-install review.", fields: GENERIC_FIELDS },
+    { code: "F10", title: "Secondary Review", note: "Secondary readiness / interface review.", fields: GENERIC_FIELDS },
+    { code: "F11", title: "Area Readiness Review", note: "Hold point prior to progression.", hold: true, fields: GENERIC_FIELDS },
+    { code: "F12", title: "Final Release / Sign-Off", note: "Final release and sign-off.", hold: true, fields: GENERIC_FIELDS }
   ];
 }
 
@@ -138,50 +138,13 @@ const FORM_LIBRARY = {
         { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record drying, re-test or release action." }
       ]
     },
-    {
-      code: "F06",
-      title: "Drop Hammer Test Record",
-      note: "BRE drop hammer / screed strength testing.",
-      fields: GENERIC_FIELDS
-    },
-    {
-      code: "F07",
-      title: "Curing Access Log",
-      note: "Curing and trafficking control log.",
-      fields: GENERIC_FIELDS
-    },
-    {
-      code: "F08",
-      title: "Post Pour Inspection",
-      note: "Initial post-pour visual inspection.",
-      fields: GENERIC_FIELDS
-    },
-    {
-      code: "F09",
-      title: "Material Delivery Log",
-      note: "Material receipt and delivery verification.",
-      fields: GENERIC_FIELDS
-    },
-    {
-      code: "F10",
-      title: "Calibration / Equipment Check",
-      note: "Equipment and calibration control.",
-      fields: GENERIC_FIELDS
-    },
-    {
-      code: "F11",
-      title: "Area Readiness Review",
-      note: "Area readiness prior to progression.",
-      hold: true,
-      fields: GENERIC_FIELDS
-    },
-    {
-      code: "F12",
-      title: "Final Release / Sign-Off",
-      note: "Final package release.",
-      hold: true,
-      fields: GENERIC_FIELDS
-    }
+    { code: "F06", title: "Drop Hammer Test Record", note: "BRE drop hammer / screed strength testing.", fields: GENERIC_FIELDS },
+    { code: "F07", title: "Curing Access Log", note: "Curing and trafficking control log.", fields: GENERIC_FIELDS },
+    { code: "F08", title: "Post Pour Inspection", note: "Initial post-pour visual inspection.", fields: GENERIC_FIELDS },
+    { code: "F09", title: "Material Delivery Log", note: "Material receipt and delivery verification.", fields: GENERIC_FIELDS },
+    { code: "F10", title: "Calibration / Equipment Check", note: "Equipment and calibration control.", fields: GENERIC_FIELDS },
+    { code: "F11", title: "Area Readiness Review", note: "Area readiness prior to progression.", hold: true, fields: GENERIC_FIELDS },
+    { code: "F12", title: "Final Release / Sign-Off", note: "Final package release.", hold: true, fields: GENERIC_FIELDS }
   ],
   cb: makeGenericScopeForms("Cradle & Batten"),
   raf: makeGenericScopeForms("Raised Access Floor"),
@@ -355,20 +318,61 @@ function goToActions() {
   showView("actions");
 }
 
+function isOverdue(action) {
+  if (!action.dueDate) return false;
+  if (action.actionStatus === "closed") return false;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const due = new Date(action.dueDate);
+  due.setHours(0, 0, 0, 0);
+
+  return due < today;
+}
+
+function formatActionStatus(status) {
+  if (status === "open") return "Open";
+  if (status === "in_progress") return "In Progress";
+  if (status === "closed") return "Closed";
+  return status;
+}
+
+function getFilteredActions() {
+  const statusFilter = document.getElementById("actionFilterStatus")?.value || "all";
+  const assignedFilter = document.getElementById("actionFilterAssigned")?.value || "all";
+
+  let projectActions = actions.filter(a => String(a.project) === String(currentProject.id));
+
+  if (assignedFilter === "me") {
+    projectActions = projectActions.filter(a => a.assignedTo === currentUser);
+  }
+
+  if (statusFilter === "open") {
+    projectActions = projectActions.filter(a => a.actionStatus === "open");
+  } else if (statusFilter === "in_progress") {
+    projectActions = projectActions.filter(a => a.actionStatus === "in_progress");
+  } else if (statusFilter === "closed") {
+    projectActions = projectActions.filter(a => a.actionStatus === "closed");
+  } else if (statusFilter === "overdue") {
+    projectActions = projectActions.filter(a => isOverdue(a));
+  }
+
+  return projectActions.sort((a, b) => b.id - a.id);
+}
+
 function renderActionCards() {
   const wrap = document.getElementById("actionCards");
   wrap.innerHTML = "";
 
-  const projectActions = actions
-    .filter(a => String(a.project) === String(currentProject.id))
-    .sort((a, b) => b.id - a.id);
+  const projectActions = getFilteredActions();
 
   if (projectActions.length === 0) {
     wrap.innerHTML = `
       <div class="select-card">
         <div class="select-card-top">
-          <h4>No actions</h4>
-          <p>No actions have been created for this project yet.</p>
+          <h4>No matching actions</h4>
+          <p>No actions match the current filters.</p>
         </div>
       </div>
     `;
@@ -376,6 +380,7 @@ function renderActionCards() {
   }
 
   projectActions.forEach(action => {
+    const overdueText = isOverdue(action) ? `<p><strong>Overdue:</strong> Yes</p>` : "";
     wrap.innerHTML += `
       <div class="select-card">
         <div class="select-card-top">
@@ -385,6 +390,7 @@ function renderActionCards() {
           <p>Due: ${action.dueDate || "Not set"}</p>
           <p>Status: ${formatActionStatus(action.actionStatus || "open")}</p>
           <p>Source: ${action.sourceForm || "Record"}</p>
+          ${overdueText}
         </div>
         <div class="select-card-body">
           <button class="btn btn-primary" onclick="cycleActionStatus(${action.id})">Update Status</button>
@@ -408,13 +414,6 @@ function cycleActionStatus(actionId) {
 
   safeSave();
   renderActionCards();
-}
-
-function formatActionStatus(status) {
-  if (status === "open") return "Open";
-  if (status === "in_progress") return "In Progress";
-  if (status === "closed") return "Closed";
-  return status;
 }
 
 function goToScopes() {
