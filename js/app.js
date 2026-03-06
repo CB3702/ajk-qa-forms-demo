@@ -1,30 +1,78 @@
 const FORM_LIBRARY = {
   screed: [
-    { code: "F00", title: "Benchmark Acceptance", note: "Hold point before production works." },
-    { code: "F01", title: "Pre Pour Checklist", note: "Pre-start release and area checks." },
-    { code: "F04", title: "SR Test Record", note: "Surface regularity inspection." },
-    { code: "F05", title: "Moisture Test Report", note: "Pre-finish hold point." }
+    { code: "F00", title: "Benchmark Acceptance", note: "Initial benchmark approval before production works.", hold: true },
+    { code: "F01", title: "Pre Pour Checklist", note: "Area release, substrate, membrane and insulation checks." },
+    { code: "F02", title: "Batching Record Sheet", note: "Material batching and mix control log." },
+    { code: "F03", title: "Thickness Level Log", note: "Thickness and level checks during placement." },
+    { code: "F04", title: "SR Test Record", note: "Surface regularity testing.", hold: true },
+    { code: "F05", title: "Moisture Test Report", note: "Moisture test and pre-finish release.", hold: true },
+    { code: "F06", title: "Drop Hammer Test Record", note: "BRE drop hammer / screed strength testing." },
+    { code: "F07", title: "Curing Access Log", note: "Curing and trafficking control log." },
+    { code: "F08", title: "Post Pour Inspection", note: "Initial post-pour visual inspection." },
+    { code: "F09", title: "Material Delivery Log", note: "Material receipt and delivery verification." },
+    { code: "F10", title: "Calibration / Equipment Check", note: "Equipment and calibration control." },
+    { code: "F11", title: "Area Readiness Review", note: "Area readiness prior to progression.", hold: true },
+    { code: "F12", title: "Final Release / Sign-Off", note: "Final package release.", hold: true }
   ],
   cb: [
-    { code: "F00", title: "Benchmark Acceptance", note: "Initial system benchmark approval." },
-    { code: "F06", title: "Level Check Record", note: "Set-out and level confirmation." },
-    { code: "F07", title: "Installation Inspection", note: "Cradle and batten installation check." }
+    { code: "F00", title: "Benchmark Acceptance", note: "Initial cradle and batten benchmark approval.", hold: true },
+    { code: "F01", title: "Area Release Check", note: "Area released and ready for works." },
+    { code: "F02", title: "Material Delivery Log", note: "Materials received and checked." },
+    { code: "F03", title: "Substrate / Support Condition Check", note: "Base condition suitable for install." },
+    { code: "F04", title: "Setting Out Hold Point", note: "Set-out checked before installation continues.", hold: true },
+    { code: "F05", title: "Fixing / Anchorage Check", note: "Fixing and anchorage compliance review." },
+    { code: "F06", title: "Level Check Record", note: "Level and tolerance checks." },
+    { code: "F07", title: "Installation Inspection", note: "Cradle and batten installation record." },
+    { code: "F08", title: "Flatness / Plane Check", note: "Installed batten plane verification." },
+    { code: "F09", title: "Moisture / Timber Condition Check", note: "Timber moisture and storage condition." },
+    { code: "F10", title: "Protection / Post Install Review", note: "Protection and post-install controls." },
+    { code: "F11", title: "Pre-Finish Readiness", note: "Hold point before finishes proceed.", hold: true },
+    { code: "F12", title: "Final Release / Sign-Off", note: "Final package release.", hold: true }
   ],
   raf: [
-    { code: "F00", title: "Benchmark Acceptance", note: "Initial raised access floor benchmark." },
-    { code: "F08", title: "Panel Installation Record", note: "Panel and pedestal installation." },
-    { code: "F09", title: "Final Inspection", note: "Completion and readiness review." }
+    { code: "F00", title: "Benchmark Acceptance", note: "Initial RAF benchmark approval.", hold: true },
+    { code: "F01", title: "Area Release Check", note: "Area available and ready for raised floor works." },
+    { code: "F02", title: "Material Delivery Log", note: "Panels, pedestals and components checked on delivery." },
+    { code: "F03", title: "Substrate Readiness", note: "Substrate suitability and cleanliness check." },
+    { code: "F04", title: "Datum / Setting Out Hold Point", note: "Set-out and datum approval before install.", hold: true },
+    { code: "F05", title: "Pedestal Fixing Check", note: "Pedestal fixing and layout verification." },
+    { code: "F06", title: "Level Check Record", note: "Finished floor level checks." },
+    { code: "F07", title: "Service Coordination Check", note: "Interface with services below floor." },
+    { code: "F08", title: "Panel Installation Record", note: "Panel installation and alignment record." },
+    { code: "F09", title: "Final Inspection", note: "Completion inspection and defect review." },
+    { code: "F10", title: "Protection Review", note: "Post-installation protection and access control." },
+    { code: "F11", title: "Area Readiness for Next Trade", note: "Hold point before handover onward.", hold: true },
+    { code: "F12", title: "Final Release / Sign-Off", note: "Final package release.", hold: true }
   ],
   hw: [
-    { code: "F00", title: "Benchmark Acceptance", note: "Hold point benchmark approval." },
-    { code: "F10", title: "Substrate Readiness", note: "Pre-installation substrate checks." },
-    { code: "F11", title: "Hardwood Installation Record", note: "Installation stage QA." },
-    { code: "F12", title: "Final Sign-Off", note: "Completion hold point." }
+    { code: "F00", title: "Benchmark Acceptance", note: "Hardwood benchmark approval.", hold: true },
+    { code: "F01", title: "Area Release Check", note: "Area available and released for hardwood works." },
+    { code: "F02", title: "Material Delivery Log", note: "Boards, adhesives and trims checked on arrival." },
+    { code: "F03", title: "Substrate Readiness", note: "Substrate condition and readiness verification." },
+    { code: "F04", title: "Moisture / Environment Hold Point", note: "Moisture and environmental sign-off.", hold: true },
+    { code: "F05", title: "Setting Out Approval", note: "Setting out and orientation check." },
+    { code: "F06", title: "Adhesive / Fixing Check", note: "Adhesive and fixing compliance record." },
+    { code: "F07", title: "Installation Inspection", note: "Ongoing installation QA record." },
+    { code: "F08", title: "Detail / Threshold Check", note: "Thresholds, margins and local details review." },
+    { code: "F09", title: "Protection Review", note: "Installed floor protection and traffic control." },
+    { code: "F10", title: "Substrate Readiness Review", note: "Secondary readiness / interface check." },
+    { code: "F11", title: "Hardwood Installation Record", note: "Primary installation record.", hold: true },
+    { code: "F12", title: "Final Sign-Off", note: "Completion hold point and release.", hold: true }
   ],
   tiling: [
-    { code: "F00", title: "Benchmark Acceptance", note: "Initial benchmark and approval." },
-    { code: "F11", title: "Tile Installation Record", note: "Daily installation QA." },
-    { code: "F12", title: "Final Inspection", note: "Completion and release." }
+    { code: "F00", title: "Benchmark Acceptance", note: "Tiling benchmark approval.", hold: true },
+    { code: "F01", title: "Area Release Check", note: "Area release and access readiness." },
+    { code: "F02", title: "Material Delivery Log", note: "Tiles, adhesive, grout and trims checked on arrival." },
+    { code: "F03", title: "Substrate Readiness", note: "Substrate suitability for tile installation." },
+    { code: "F04", title: "Setting Out Hold Point", note: "Setting out approval before installation.", hold: true },
+    { code: "F05", title: "Adhesive / Primer Check", note: "Primer and adhesive system verification." },
+    { code: "F06", title: "Tile Batch / Shade Review", note: "Batch, shade and blend consistency check." },
+    { code: "F07", title: "Level / Lippage Check", note: "Level and lippage compliance review." },
+    { code: "F08", title: "Installation Inspection", note: "Main installation QA record." },
+    { code: "F09", title: "Grout / Finish Review", note: "Grout, finish and detailing check." },
+    { code: "F10", title: "Protection Review", note: "Protection and access control after install." },
+    { code: "F11", title: "Tile Installation Record", note: "Primary installation record.", hold: true },
+    { code: "F12", title: "Final Inspection", note: "Completion and release.", hold: true }
   ]
 };
 
@@ -33,11 +81,7 @@ let currentProject = null;
 
 /* ---------- SAFE DEFAULTS ---------- */
 if (typeof users === "undefined" || !Array.isArray(users)) {
-  users = [
-    { name: "Chris" },
-    { name: "Matt" },
-    { name: "Rafal" }
-  ];
+  users = [{ name: "Chris" }, { name: "Matt" }, { name: "Rafal" }];
 }
 
 if (typeof projects === "undefined" || !Array.isArray(projects)) {
@@ -56,7 +100,7 @@ if (typeof actions === "undefined" || !Array.isArray(actions)) {
   actions = [];
 }
 
-function safeSave(){
+function safeSave() {
   if (typeof saveData === "function") {
     saveData();
   } else {
@@ -68,13 +112,9 @@ function safeSave(){
   }
 }
 
-function seedData(){
+function seedData() {
   if (users.length === 0) {
-    users.push(
-      { name: "Chris" },
-      { name: "Matt" },
-      { name: "Rafal" }
-    );
+    users.push({ name: "Chris" }, { name: "Matt" }, { name: "Rafal" });
   }
 
   if (projects.length === 0) {
@@ -97,13 +137,13 @@ function seedData(){
   safeSave();
 }
 
-function showView(name){
+function showView(name) {
   document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
   const target = document.getElementById("view-" + name);
   if (target) target.classList.add("active");
 }
 
-function buildLoginUsers(){
+function buildLoginUsers() {
   const loginUser = document.getElementById("loginUser");
   if (!loginUser) return;
 
@@ -117,7 +157,7 @@ function buildLoginUsers(){
   });
 }
 
-function login(){
+function login() {
   const loginUserEl = document.getElementById("loginUser");
   const selectedUser = loginUserEl ? loginUserEl.value : "";
 
@@ -135,13 +175,13 @@ function login(){
   showView("projects");
 }
 
-function logout(){
+function logout() {
   currentUser = null;
   currentProject = null;
   showView("login");
 }
 
-function renderProjectCards(){
+function renderProjectCards() {
   const wrap = document.getElementById("projectCards");
   if (!wrap) return;
 
@@ -162,7 +202,7 @@ function renderProjectCards(){
   });
 }
 
-function selectProject(projectId){
+function selectProject(projectId) {
   currentProject = projects.find(p => String(p.id) === String(projectId));
 
   if (!currentProject) {
@@ -181,13 +221,14 @@ function selectProject(projectId){
   if (activeUserChip) activeUserChip.textContent = currentUser || "User";
 
   renderLocations();
+  updateFormTypeOptions();
   renderFormsList();
   renderDashboard();
 
   showView("dashboard");
 }
 
-function renderLocations(){
+function renderLocations() {
   const select = document.getElementById("locationSelect");
   if (!select || !currentProject) return;
 
@@ -211,27 +252,48 @@ function renderLocations(){
   });
 }
 
-function renderFormsList(){
+function getActiveScope() {
   const scopeEl = document.getElementById("scopeSelect");
-  const list = document.getElementById("formsList");
-  if (!scopeEl || !list) return;
+  return scopeEl ? scopeEl.value : "screed";
+}
 
-  const scope = scopeEl.value;
-  list.innerHTML = "";
+function updateFormTypeOptions() {
+  const formType = document.getElementById("formType");
+  if (!formType) return;
 
+  const scope = getActiveScope();
   const items = FORM_LIBRARY[scope] || [];
+
+  formType.innerHTML = "";
+
+  items.forEach(item => {
+    const o = document.createElement("option");
+    o.value = `${item.code} ${item.title}`;
+    o.text = `${item.code} ${item.title}`;
+    formType.add(o);
+  });
+}
+
+function renderFormsList() {
+  const list = document.getElementById("formsList");
+  if (!list) return;
+
+  const scope = getActiveScope();
+  const items = FORM_LIBRARY[scope] || [];
+
+  list.innerHTML = "";
 
   items.forEach(item => {
     list.innerHTML += `
       <div class="form-item">
         <div class="form-item-title">${item.code} · ${item.title}</div>
-        <div class="form-item-meta">${item.note}</div>
+        <div class="form-item-meta">${item.note}${item.hold ? " · Hold Point" : ""}</div>
       </div>
     `;
   });
 }
 
-function submitForm(){
+function submitForm() {
   if (!currentProject) {
     alert("Select a project first.");
     return;
@@ -243,9 +305,9 @@ function submitForm(){
     return;
   }
 
-  const status = document.getElementById("statusSelect").value;
-  const scope = document.getElementById("scopeSelect").value;
+  const scope = getActiveScope();
   const type = document.getElementById("formType").value;
+  const status = document.getElementById("statusSelect").value;
   const locationName = locationSelect.selectedOptions[0].text;
 
   const form = {
@@ -278,7 +340,7 @@ function submitForm(){
   renderDashboard();
 }
 
-function renderDashboard(){
+function renderDashboard() {
   if (!currentProject) return;
 
   const projectForms = forms.filter(f => String(f.project) === String(currentProject.id));
@@ -321,35 +383,40 @@ function renderDashboard(){
     return;
   }
 
-  projectActions.slice().reverse().forEach(a => {
-    const klass = a.status === "hold" ? "hold" : "fail";
-    const label = a.status === "hold" ? "Hold Point" : "Fail";
+  projectActions
+    .slice()
+    .reverse()
+    .forEach(a => {
+      const klass = a.status === "hold" ? "hold" : "fail";
+      const label = a.status === "hold" ? "Hold Point" : "Fail";
 
-    actionWrap.innerHTML += `
-      <div class="action-item ${klass}">
-        <div class="action-top">
-          <div class="action-title">${a.title}</div>
-          <div class="badge ${klass}">${label}</div>
+      actionWrap.innerHTML += `
+        <div class="action-item ${klass}">
+          <div class="action-top">
+            <div class="action-title">${a.title}</div>
+            <div class="badge ${klass}">${label}</div>
+          </div>
+          <div class="action-meta">
+            Assigned to: <strong>${a.assigned}</strong><br>
+            Location: <strong>${a.locationName}</strong><br>
+            Scope: <strong>${a.scope}</strong>
+          </div>
         </div>
-        <div class="action-meta">
-          Assigned to: <strong>${a.assigned}</strong><br>
-          Location: <strong>${a.locationName}</strong><br>
-          Scope: <strong>${a.scope}</strong>
-        </div>
-      </div>
-    `;
-  });
+      `;
+    });
 }
 
-document.addEventListener("change", function(e){
+document.addEventListener("change", function(e) {
   if (e.target && e.target.id === "scopeSelect") {
+    updateFormTypeOptions();
     renderFormsList();
   }
 });
 
-function init(){
+function init() {
   seedData();
   buildLoginUsers();
+  updateFormTypeOptions();
   showView("login");
 }
 
