@@ -127,6 +127,31 @@
         <h3>Project action management</h3>
       </div>
 
+      <div class="summary-card" style="margin-bottom:18px;">
+        <div class="summary-row">
+          <span class="summary-label">Status Filter</span>
+          <span class="summary-value" style="width:280px;max-width:100%;">
+            <select id="actionFilterStatus" onchange="renderActionCards()" style="margin:0;">
+              <option value="all">All</option>
+              <option value="open">Open</option>
+              <option value="in_progress">In Progress</option>
+              <option value="closed">Closed</option>
+              <option value="overdue">Overdue</option>
+            </select>
+          </span>
+        </div>
+
+        <div class="summary-row">
+          <span class="summary-label">Assignment Filter</span>
+          <span class="summary-value" style="width:280px;max-width:100%;">
+            <select id="actionFilterAssigned" onchange="renderActionCards()" style="margin:0;">
+              <option value="all">All Actions</option>
+              <option value="me">Assigned To Me</option>
+            </select>
+          </span>
+        </div>
+      </div>
+
       <div class="card-grid" id="actionCards"></div>
     </main>
   </section>
