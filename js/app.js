@@ -10,7 +10,7 @@ const FORM_LIBRARY = {
         { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
         { id: "areaRef", label: "Area Reference", type: "text", placeholder: "Block / level / area ref" },
         { id: "benchmarkOutcome", label: "Benchmark Outcome", type: "select", options: ["Accepted", "Accepted with Comments", "Rejected"] },
-        { id: "benchmarkNotes", label: "Benchmark Notes", type: "textarea", rows: 4, full: true, placeholder: "Record benchmark observations and acceptance basis." },
+        { id: "checks", label: "Benchmark Notes", type: "textarea", rows: 5, full: true, placeholder: "Record benchmark observations and acceptance basis." },
         { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record any approval condition or further action." }
       ]
     },
@@ -1190,7 +1190,7 @@ function renderField(field) {
       <label class="field-label" for="dyn_${field.id}">${field.label}</label>
       <input id="dyn_${field.id}" data-field-id="${field.id}" type="${field.type || "text"}" value="${value || ""}" placeholder="${field.placeholder || ""}" />
     </div>
-  `;
+    `;
 }
 
 function getDefaultFieldValue(field) {
