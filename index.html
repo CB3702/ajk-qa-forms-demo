@@ -101,6 +101,33 @@
       <div class="stats-grid" id="overviewStats"></div>
 
       <button class="btn btn-primary" onclick="goToScopes()">Select Scope of Works</button>
+      <div style="height:12px;"></div>
+      <button class="btn btn-primary" onclick="goToActions()">View Actions</button>
+    </main>
+  </section>
+
+  <!-- ACTION REGISTER -->
+  <section class="view" id="view-actions">
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="header-brand">
+          <div class="brand-mark small">AJK</div>
+          <div class="header-copy">
+            <h2>Action Register</h2>
+            <p id="actionsContextText">Project actions</p>
+          </div>
+        </div>
+        <button class="btn btn-secondary btn-small" onclick="showView('overview')">Back</button>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <div class="page-intro">
+        <div class="eyebrow">Open and Closed Actions</div>
+        <h3>Project action management</h3>
+      </div>
+
+      <div class="card-grid" id="actionCards"></div>
     </main>
   </section>
 
@@ -176,6 +203,15 @@
       </div>
 
       <div class="card-grid" id="formCards"></div>
+
+      <div style="height:18px;"></div>
+
+      <div class="page-intro">
+        <div class="eyebrow">Location History</div>
+        <h3>Inspection history for selected location</h3>
+      </div>
+
+      <div class="card-grid" id="locationHistoryCards"></div>
     </main>
   </section>
 
