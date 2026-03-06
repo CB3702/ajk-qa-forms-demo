@@ -1,3 +1,50 @@
+const GENERIC_FIELDS = [
+  { id: "date", label: "Inspection Date", type: "date" },
+  { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
+  { id: "reference", label: "Reference", type: "text", placeholder: "Drawing ref / area ref / batch ref" },
+  {
+    id: "status",
+    label: "Result",
+    type: "select",
+    options: ["pass", "fail", "hold"],
+    labels: { pass: "Pass", fail: "Fail", hold: "Hold Point" }
+  },
+  {
+    id: "checks",
+    label: "Inspection Notes",
+    type: "textarea",
+    rows: 5,
+    full: true,
+    placeholder: "Record the principal checks completed, observations and issues."
+  },
+  {
+    id: "followUp",
+    label: "Actions / Follow-Up",
+    type: "textarea",
+    rows: 4,
+    full: true,
+    placeholder: "Record follow-up, rectification, escalation or next action."
+  }
+];
+
+function makeGenericScopeForms(scopeTitle) {
+  return [
+    { code: "F00", title: "Benchmark Acceptance", note: `${scopeTitle} benchmark approval.`, hold: true, fields: GENERIC_FIELDS },
+    { code: "F01", title: "Area Release Check", note: `Area release for ${scopeTitle.toLowerCase()} works.`, fields: GENERIC_FIELDS },
+    { code: "F02", title: "Material Delivery Log", note: `Material receipt and verification for ${scopeTitle.toLowerCase()}.`, fields: GENERIC_FIELDS },
+    { code: "F03", title: "Substrate / Readiness Check", note: `Substrate and readiness review.`, fields: GENERIC_FIELDS },
+    { code: "F04", title: "Setting Out Hold Point", note: `Setting out approval before progression.`, hold: true, fields: GENERIC_FIELDS },
+    { code: "F05", title: "System Check", note: `System-specific compliance check.`, fields: GENERIC_FIELDS },
+    { code: "F06", title: "Level / Tolerance Record", note: `Tolerance and level verification.`, fields: GENERIC_FIELDS },
+    { code: "F07", title: "Installation Inspection", note: `Main installation QA record.`, fields: GENERIC_FIELDS },
+    { code: "F08", title: "Detail Check", note: `Local detail and interface review.`, fields: GENERIC_FIELDS },
+    { code: "F09", title: "Protection Review", note: `Protection and post-install review.`, fields: GENERIC_FIELDS },
+    { code: "F10", title: "Secondary Review", note: `Secondary readiness / interface review.`, fields: GENERIC_FIELDS },
+    { code: "F11", title: "Area Readiness Review", note: `Hold point prior to progression.`, hold: true, fields: GENERIC_FIELDS },
+    { code: "F12", title: "Final Release / Sign-Off", note: `Final release and sign-off.`, hold: true, fields: GENERIC_FIELDS }
+  ];
+}
+
 const FORM_LIBRARY = {
   screed: [
     {
@@ -95,814 +142,51 @@ const FORM_LIBRARY = {
       code: "F06",
       title: "Drop Hammer Test Record",
       note: "BRE drop hammer / screed strength testing.",
-      fields: [
-        { id: "date", label: "Test Date", type: "date" },
-        { id: "inspector", label: "Tested By", type: "text", placeholder: "Enter name" },
-        { id: "deviceRef", label: "Device Ref", type: "text", placeholder: "BRE tester reference" },
-        { id: "sampleLocation", label: "Test Location", type: "text", placeholder: "Room / test point" },
-        { id: "resultValue", label: "Measured Result", type: "text", placeholder: "Enter reading / category" },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Pass", fail: "Fail" } },
-        { id: "checks", label: "Test Notes", type: "textarea", rows: 5, full: true, placeholder: "Record readings and compliance." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record re-test or remedial action." }
-      ]
+      fields: GENERIC_FIELDS
     },
     {
       code: "F07",
       title: "Curing Access Log",
       note: "Curing and trafficking control log.",
-      fields: [
-        { id: "date", label: "Log Date", type: "date" },
-        { id: "inspector", label: "Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "accessStatus", label: "Access Condition", type: "select", options: ["Controlled", "Unauthorised Access", "Restricted"] },
-        { id: "protectionStatus", label: "Protection Status", type: "select", options: ["Intact", "Damaged", "Not In Place"] },
-        { id: "status", label: "Overall Result", type: "select", options: ["pass", "fail"], labels: { pass: "Acceptable", fail: "Issue Identified" } },
-        { id: "checks", label: "Log Notes", type: "textarea", rows: 5, full: true, placeholder: "Record curing, trafficking and protection observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record access control or remedial action." }
-      ]
+      fields: GENERIC_FIELDS
     },
     {
       code: "F08",
       title: "Post Pour Inspection",
       note: "Initial post-pour visual inspection.",
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "surfaceCondition", label: "Surface Condition", type: "select", options: ["Good", "Minor Issue", "Defect Present"] },
-        { id: "cracking", label: "Cracking / Defect", type: "select", options: ["None", "Minor", "Significant"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Pass", fail: "Fail" } },
-        { id: "checks", label: "Inspection Notes", type: "textarea", rows: 5, full: true, placeholder: "Record finish, defects and observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record remedial action or monitoring." }
-      ]
+      fields: GENERIC_FIELDS
     },
     {
       code: "F09",
       title: "Material Delivery Log",
       note: "Material receipt and delivery verification.",
-      fields: [
-        { id: "date", label: "Delivery Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "deliveryRef", label: "Delivery / Ticket Ref", type: "text", placeholder: "Enter delivery note / ticket ref" },
-        { id: "materialType", label: "Material Type", type: "text", placeholder: "Enter material description" },
-        { id: "status", label: "Delivery Status", type: "select", options: ["pass", "fail"], labels: { pass: "Accepted", fail: "Rejected / Quarantined" } },
-        { id: "checks", label: "Delivery Notes", type: "textarea", rows: 5, full: true, placeholder: "Record delivery condition, quantity and traceability." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record rejection, quarantine or further checks." }
-      ]
+      fields: GENERIC_FIELDS
     },
     {
       code: "F10",
       title: "Calibration / Equipment Check",
       note: "Equipment and calibration control.",
-      fields: [
-        { id: "date", label: "Check Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "deviceRef", label: "Equipment / Device Ref", type: "text", placeholder: "Enter equipment ID / serial no." },
-        { id: "calibrationStatus", label: "Calibration Status", type: "select", options: ["Current", "Expired", "Not Verified"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Compliant", fail: "Non-Compliant" } },
-        { id: "checks", label: "Check Notes", type: "textarea", rows: 5, full: true, placeholder: "Record calibration dates, condition and findings." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record equipment replacement or escalation." }
-      ]
+      fields: GENERIC_FIELDS
     },
     {
       code: "F11",
       title: "Area Readiness Review",
       note: "Area readiness prior to progression.",
       hold: true,
-      fields: [
-        { id: "date", label: "Review Date", type: "date" },
-        { id: "inspector", label: "Reviewed By", type: "text", placeholder: "Enter name" },
-        { id: "readinessStatus", label: "Area Readiness", type: "select", options: ["Ready", "Ready with Comments", "Not Ready"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail", "hold"], labels: { pass: "Ready", fail: "Not Ready", hold: "Hold Point" } },
-        { id: "checks", label: "Review Notes", type: "textarea", rows: 5, full: true, placeholder: "Record outstanding items and readiness observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record closure actions or approvals required." }
-      ]
+      fields: GENERIC_FIELDS
     },
     {
       code: "F12",
       title: "Final Release / Sign-Off",
       note: "Final package release.",
       hold: true,
-      fields: [
-        { id: "date", label: "Release Date", type: "date" },
-        { id: "inspector", label: "Released By", type: "text", placeholder: "Enter name" },
-        { id: "releaseStatus", label: "Release Status", type: "select", options: ["Released", "Released with Comments", "Not Released"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "hold"], labels: { pass: "Released", hold: "Hold Point" } },
-        { id: "checks", label: "Release Notes", type: "textarea", rows: 5, full: true, placeholder: "Record final checks and release basis." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record residual actions or approvals." }
-      ]
+      fields: GENERIC_FIELDS
     }
   ],
-  cb: [
-    {
-      code: "F00",
-      title: "Benchmark Acceptance",
-      note: "Initial cradle and batten benchmark approval.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "areaRef", label: "Area Reference", type: "text", placeholder: "Block / level / area ref" },
-        { id: "benchmarkOutcome", label: "Benchmark Outcome", type: "select", options: ["Accepted", "Accepted with Comments", "Rejected"] },
-        { id: "checks", label: "Benchmark Notes", type: "textarea", rows: 5, full: true, placeholder: "Record system build-up and benchmark observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record approval conditions or further action." }
-      ]
-    },
-    {
-      code: "F01",
-      title: "Area Release Check",
-      note: "Area released and ready for works.",
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "areaRelease", label: "Area Release", type: "select", options: ["Released", "Not Released"] },
-        { id: "accessStatus", label: "Access / Logistics", type: "select", options: ["Available", "Restricted", "Blocked"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Pass", fail: "Fail" } },
-        { id: "checks", label: "Inspection Notes", type: "textarea", rows: 5, full: true, placeholder: "Record area readiness and restrictions." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record access or coordination actions." }
-      ]
-    },
-    {
-      code: "F02",
-      title: "Material Delivery Log",
-      note: "Materials received and checked.",
-      fields: [
-        { id: "date", label: "Delivery Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "deliveryRef", label: "Delivery Ref", type: "text", placeholder: "Enter delivery note / ticket ref" },
-        { id: "materialType", label: "Material Type", type: "text", placeholder: "Enter material description" },
-        { id: "status", label: "Delivery Status", type: "select", options: ["pass", "fail"], labels: { pass: "Accepted", fail: "Rejected" } },
-        { id: "checks", label: "Delivery Notes", type: "textarea", rows: 5, full: true, placeholder: "Record condition, quantity and traceability." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record quarantine or replacement action." }
-      ]
-    },
-    {
-      code: "F03",
-      title: "Substrate / Support Condition Check",
-      note: "Base condition suitable for install.",
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "substrate", label: "Base Condition", type: "select", options: ["Acceptable", "Minor Issue", "Unacceptable"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Pass", fail: "Fail" } },
-        { id: "checks", label: "Inspection Notes", type: "textarea", rows: 5, full: true, placeholder: "Record substrate and support condition." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record remedial works or further checks." }
-      ]
-    },
-    {
-      code: "F04",
-      title: "Setting Out Hold Point",
-      note: "Set-out checked before installation continues.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Check Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "designRef", label: "Setting Out Ref", type: "text", placeholder: "Drawing / design reference" },
-        { id: "status", label: "Result", type: "select", options: ["pass", "hold", "fail"], labels: { pass: "Approved", hold: "Hold Point", fail: "Rejected" } },
-        { id: "checks", label: "Set-Out Notes", type: "textarea", rows: 5, full: true, placeholder: "Record datum, alignment and set-out observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record approvals or amendments required." }
-      ]
-    },
-    {
-      code: "F05",
-      title: "Fixing / Anchorage Check",
-      note: "Fixing and anchorage compliance review.",
-      fields: [
-        { id: "date", label: "Check Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "fixingType", label: "Fixing / Anchorage Type", type: "text", placeholder: "Enter fixing type / system" },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Compliant", fail: "Non-Compliant" } },
-        { id: "checks", label: "Check Notes", type: "textarea", rows: 5, full: true, placeholder: "Record fixing centres, anchorages and compliance." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record non-conformance or remedial action." }
-      ]
-    },
-    {
-      code: "F06",
-      title: "Level Check Record",
-      note: "Level and tolerance checks.",
-      fields: [
-        { id: "date", label: "Check Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "sampleLocation", label: "Check Location", type: "text", placeholder: "Room / point checked" },
-        { id: "resultValue", label: "Measured Value", type: "text", placeholder: "Enter level result" },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Within Tolerance", fail: "Outside Tolerance" } },
-        { id: "checks", label: "Check Notes", type: "textarea", rows: 5, full: true, placeholder: "Record tolerance measurements and observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record rectification or re-check action." }
-      ]
-    },
-    {
-      code: "F07",
-      title: "Installation Inspection",
-      note: "Cradle and batten installation record.",
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "installStage", label: "Installation Stage", type: "select", options: ["Started", "In Progress", "Complete"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Pass", fail: "Fail" } },
-        { id: "checks", label: "Installation Notes", type: "textarea", rows: 5, full: true, placeholder: "Record installation quality and observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record snagging or remedial actions." }
-      ]
-    },
-    {
-      code: "F08",
-      title: "Flatness / Plane Check",
-      note: "Installed batten plane verification.",
-      fields: [
-        { id: "date", label: "Check Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "sampleLocation", label: "Check Location", type: "text", placeholder: "Room / area checked" },
-        { id: "resultValue", label: "Measured Result", type: "text", placeholder: "Enter deviation / tolerance result" },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Within Tolerance", fail: "Outside Tolerance" } },
-        { id: "checks", label: "Check Notes", type: "textarea", rows: 5, full: true, placeholder: "Record plane and flatness observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record corrective action or re-check." }
-      ]
-    },
-    {
-      code: "F09",
-      title: "Moisture / Timber Condition Check",
-      note: "Timber moisture and storage condition.",
-      fields: [
-        { id: "date", label: "Check Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "resultValue", label: "Moisture / Condition Result", type: "text", placeholder: "Enter reading / observation" },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Acceptable", fail: "Issue Identified" } },
-        { id: "checks", label: "Check Notes", type: "textarea", rows: 5, full: true, placeholder: "Record moisture content and storage condition." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record quarantine or storage action." }
-      ]
-    },
-    {
-      code: "F10",
-      title: "Protection / Post Install Review",
-      note: "Protection and post-install controls.",
-      fields: [
-        { id: "date", label: "Review Date", type: "date" },
-        { id: "inspector", label: "Reviewed By", type: "text", placeholder: "Enter name" },
-        { id: "protectionStatus", label: "Protection Status", type: "select", options: ["In Place", "Damaged", "Not In Place"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Acceptable", fail: "Issue Identified" } },
-        { id: "checks", label: "Review Notes", type: "textarea", rows: 5, full: true, placeholder: "Record protection, access and condition." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record replacement or further protection action." }
-      ]
-    },
-    {
-      code: "F11",
-      title: "Pre-Finish Readiness",
-      note: "Hold point before finishes proceed.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Review Date", type: "date" },
-        { id: "inspector", label: "Reviewed By", type: "text", placeholder: "Enter name" },
-        { id: "readinessStatus", label: "Readiness Status", type: "select", options: ["Ready", "Ready with Comments", "Not Ready"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "hold", "fail"], labels: { pass: "Ready", hold: "Hold Point", fail: "Not Ready" } },
-        { id: "checks", label: "Review Notes", type: "textarea", rows: 5, full: true, placeholder: "Record readiness and outstanding items." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record approvals or closure action." }
-      ]
-    },
-    {
-      code: "F12",
-      title: "Final Release / Sign-Off",
-      note: "Final package release.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Release Date", type: "date" },
-        { id: "inspector", label: "Released By", type: "text", placeholder: "Enter name" },
-        { id: "releaseStatus", label: "Release Status", type: "select", options: ["Released", "Released with Comments", "Not Released"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "hold"], labels: { pass: "Released", hold: "Hold Point" } },
-        { id: "checks", label: "Release Notes", type: "textarea", rows: 5, full: true, placeholder: "Record final release basis." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record residual actions or approvals." }
-      ]
-    }
-  ],
-  raf: [
-    {
-      code: "F00",
-      title: "Benchmark Acceptance",
-      note: "Initial RAF benchmark approval.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "areaRef", label: "Area Reference", type: "text", placeholder: "Block / level / area ref" },
-        { id: "benchmarkOutcome", label: "Benchmark Outcome", type: "select", options: ["Accepted", "Accepted with Comments", "Rejected"] },
-        { id: "checks", label: "Benchmark Notes", type: "textarea", rows: 5, full: true, placeholder: "Record benchmark observations and acceptance basis." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record approval conditions or further action." }
-      ]
-    },
-    {
-      code: "F01",
-      title: "Area Release Check",
-      note: "Area available and ready for raised floor works.",
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "areaRelease", label: "Area Release", type: "select", options: ["Released", "Not Released"] },
-        { id: "accessStatus", label: "Access / Logistics", type: "select", options: ["Available", "Restricted", "Blocked"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Pass", fail: "Fail" } },
-        { id: "checks", label: "Inspection Notes", type: "textarea", rows: 5, full: true, placeholder: "Record area availability and constraints." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record access or coordination action." }
-      ]
-    },
-    {
-      code: "F02",
-      title: "Material Delivery Log",
-      note: "Panels, pedestals and components checked on delivery.",
-      fields: [
-        { id: "date", label: "Delivery Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "deliveryRef", label: "Delivery Ref", type: "text", placeholder: "Enter delivery note / ticket ref" },
-        { id: "materialType", label: "Material Type", type: "text", placeholder: "Enter material description" },
-        { id: "status", label: "Delivery Status", type: "select", options: ["pass", "fail"], labels: { pass: "Accepted", fail: "Rejected" } },
-        { id: "checks", label: "Delivery Notes", type: "textarea", rows: 5, full: true, placeholder: "Record quantity, condition and traceability." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record replacement or quarantine action." }
-      ]
-    },
-    {
-      code: "F03",
-      title: "Substrate Readiness",
-      note: "Substrate suitability and cleanliness check.",
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "substrate", label: "Substrate Condition", type: "select", options: ["Acceptable", "Minor Issue", "Unacceptable"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Pass", fail: "Fail" } },
-        { id: "checks", label: "Inspection Notes", type: "textarea", rows: 5, full: true, placeholder: "Record cleanliness, readiness and constraints." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record preparatory or remedial action." }
-      ]
-    },
-    {
-      code: "F04",
-      title: "Datum / Setting Out Hold Point",
-      note: "Set-out and datum approval before install.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Check Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "designRef", label: "Datum / Drawing Ref", type: "text", placeholder: "Enter drawing / set-out reference" },
-        { id: "status", label: "Result", type: "select", options: ["pass", "hold", "fail"], labels: { pass: "Approved", hold: "Hold Point", fail: "Rejected" } },
-        { id: "checks", label: "Set-Out Notes", type: "textarea", rows: 5, full: true, placeholder: "Record datum and set-out observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record approvals or amendments required." }
-      ]
-    },
-    {
-      code: "F05",
-      title: "Pedestal Fixing Check",
-      note: "Pedestal fixing and layout verification.",
-      fields: [
-        { id: "date", label: "Check Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "fixingType", label: "Fixing Type / Layout", type: "text", placeholder: "Enter fixing / layout reference" },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Compliant", fail: "Non-Compliant" } },
-        { id: "checks", label: "Check Notes", type: "textarea", rows: 5, full: true, placeholder: "Record pedestal fixing and layout compliance." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record remedial or review action." }
-      ]
-    },
-    {
-      code: "F06",
-      title: "Level Check Record",
-      note: "Finished floor level checks.",
-      fields: [
-        { id: "date", label: "Check Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "sampleLocation", label: "Check Location", type: "text", placeholder: "Room / point checked" },
-        { id: "resultValue", label: "Measured Level", type: "text", placeholder: "Enter measured result" },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Within Tolerance", fail: "Outside Tolerance" } },
-        { id: "checks", label: "Check Notes", type: "textarea", rows: 5, full: true, placeholder: "Record levels and compliance." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record re-check or rectification action." }
-      ]
-    },
-    {
-      code: "F07",
-      title: "Service Coordination Check",
-      note: "Interface with services below floor.",
-      fields: [
-        { id: "date", label: "Check Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "coordinationStatus", label: "Service Coordination", type: "select", options: ["Clear", "Minor Conflict", "Major Conflict"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Coordinated", fail: "Conflict Identified" } },
-        { id: "checks", label: "Check Notes", type: "textarea", rows: 5, full: true, placeholder: "Record service interfaces and coordination issues." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record coordination actions or escalation." }
-      ]
-    },
-    {
-      code: "F08",
-      title: "Panel Installation Record",
-      note: "Panel installation and alignment record.",
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "installStage", label: "Installation Stage", type: "select", options: ["Started", "In Progress", "Complete"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Pass", fail: "Fail" } },
-        { id: "checks", label: "Installation Notes", type: "textarea", rows: 5, full: true, placeholder: "Record panel alignment and installation observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record snagging or corrective actions." }
-      ]
-    },
-    {
-      code: "F09",
-      title: "Final Inspection",
-      note: "Completion inspection and defect review.",
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "completionStatus", label: "Completion Status", type: "select", options: ["Complete", "Complete with Snags", "Incomplete"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Acceptable", fail: "Defects Identified" } },
-        { id: "checks", label: "Inspection Notes", type: "textarea", rows: 5, full: true, placeholder: "Record final inspection and defects." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record snag closure or further action." }
-      ]
-    },
-    {
-      code: "F10",
-      title: "Protection Review",
-      note: "Post-installation protection and access control.",
-      fields: [
-        { id: "date", label: "Review Date", type: "date" },
-        { id: "inspector", label: "Reviewed By", type: "text", placeholder: "Enter name" },
-        { id: "protectionStatus", label: "Protection Status", type: "select", options: ["In Place", "Damaged", "Not In Place"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Acceptable", fail: "Issue Identified" } },
-        { id: "checks", label: "Review Notes", type: "textarea", rows: 5, full: true, placeholder: "Record protection and access controls." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record replacement or protection action." }
-      ]
-    },
-    {
-      code: "F11",
-      title: "Area Readiness for Next Trade",
-      note: "Hold point before handover onward.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Review Date", type: "date" },
-        { id: "inspector", label: "Reviewed By", type: "text", placeholder: "Enter name" },
-        { id: "readinessStatus", label: "Readiness Status", type: "select", options: ["Ready", "Ready with Comments", "Not Ready"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "hold", "fail"], labels: { pass: "Ready", hold: "Hold Point", fail: "Not Ready" } },
-        { id: "checks", label: "Review Notes", type: "textarea", rows: 5, full: true, placeholder: "Record readiness and outstanding items." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record approvals or close-out action." }
-      ]
-    },
-    {
-      code: "F12",
-      title: "Final Release / Sign-Off",
-      note: "Final package release.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Release Date", type: "date" },
-        { id: "inspector", label: "Released By", type: "text", placeholder: "Enter name" },
-        { id: "releaseStatus", label: "Release Status", type: "select", options: ["Released", "Released with Comments", "Not Released"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "hold"], labels: { pass: "Released", hold: "Hold Point" } },
-        { id: "checks", label: "Release Notes", type: "textarea", rows: 5, full: true, placeholder: "Record final release observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record residual actions or approvals." }
-      ]
-    }
-  ],
-  hw: [
-    {
-      code: "F00",
-      title: "Benchmark Acceptance",
-      note: "Hardwood benchmark approval.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "areaRef", label: "Area Reference", type: "text", placeholder: "Block / level / area ref" },
-        { id: "benchmarkOutcome", label: "Benchmark Outcome", type: "select", options: ["Accepted", "Accepted with Comments", "Rejected"] },
-        { id: "checks", label: "Benchmark Notes", type: "textarea", rows: 5, full: true, placeholder: "Record benchmark lay pattern and quality observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record approval conditions or further action." }
-      ]
-    },
-    {
-      code: "F01",
-      title: "Area Release Check",
-      note: "Area available and released for hardwood works.",
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "areaRelease", label: "Area Release", type: "select", options: ["Released", "Not Released"] },
-        { id: "accessStatus", label: "Access / Logistics", type: "select", options: ["Available", "Restricted", "Blocked"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Pass", fail: "Fail" } },
-        { id: "checks", label: "Inspection Notes", type: "textarea", rows: 5, full: true, placeholder: "Record area readiness and access restrictions." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record coordination or enabling actions." }
-      ]
-    },
-    {
-      code: "F02",
-      title: "Material Delivery Log",
-      note: "Boards, adhesives and trims checked on arrival.",
-      fields: [
-        { id: "date", label: "Delivery Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "deliveryRef", label: "Delivery Ref", type: "text", placeholder: "Enter delivery note / ticket ref" },
-        { id: "materialType", label: "Material Type", type: "text", placeholder: "Enter material description" },
-        { id: "status", label: "Delivery Status", type: "select", options: ["pass", "fail"], labels: { pass: "Accepted", fail: "Rejected" } },
-        { id: "checks", label: "Delivery Notes", type: "textarea", rows: 5, full: true, placeholder: "Record quantity, condition and traceability." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record rejection or replacement action." }
-      ]
-    },
-    {
-      code: "F03",
-      title: "Substrate Readiness",
-      note: "Substrate condition and readiness verification.",
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "substrate", label: "Substrate Condition", type: "select", options: ["Acceptable", "Minor Issue", "Unacceptable"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Pass", fail: "Fail" } },
-        { id: "checks", label: "Inspection Notes", type: "textarea", rows: 5, full: true, placeholder: "Record substrate readiness and suitability." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record preparation or remedial action." }
-      ]
-    },
-    {
-      code: "F04",
-      title: "Moisture / Environment Hold Point",
-      note: "Moisture and environmental sign-off.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Test Date", type: "date" },
-        { id: "inspector", label: "Tested By", type: "text", placeholder: "Enter name" },
-        { id: "resultValue", label: "Moisture / Environmental Reading", type: "text", placeholder: "Enter reading / condition" },
-        { id: "status", label: "Result", type: "select", options: ["pass", "hold", "fail"], labels: { pass: "Acceptable", hold: "Hold Point", fail: "Unacceptable" } },
-        { id: "checks", label: "Test Notes", type: "textarea", rows: 5, full: true, placeholder: "Record moisture and environmental observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record drying, re-test or release action." }
-      ]
-    },
-    {
-      code: "F05",
-      title: "Setting Out Approval",
-      note: "Setting out and orientation check.",
-      fields: [
-        { id: "date", label: "Check Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "designRef", label: "Setting Out Ref", type: "text", placeholder: "Drawing / lay pattern ref" },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Approved", fail: "Rejected" } },
-        { id: "checks", label: "Set-Out Notes", type: "textarea", rows: 5, full: true, placeholder: "Record direction, pattern and margin checks." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record amendments or approvals required." }
-      ]
-    },
-    {
-      code: "F06",
-      title: "Adhesive / Fixing Check",
-      note: "Adhesive and fixing compliance record.",
-      fields: [
-        { id: "date", label: "Check Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "fixingType", label: "Adhesive / Fixing Type", type: "text", placeholder: "Enter product / fixing system" },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Compliant", fail: "Non-Compliant" } },
-        { id: "checks", label: "Check Notes", type: "textarea", rows: 5, full: true, placeholder: "Record adhesive / fixing compliance." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record corrective action or review." }
-      ]
-    },
-    {
-      code: "F07",
-      title: "Installation Inspection",
-      note: "Ongoing installation QA record.",
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "installStage", label: "Installation Stage", type: "select", options: ["Started", "In Progress", "Complete"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Pass", fail: "Fail" } },
-        { id: "checks", label: "Installation Notes", type: "textarea", rows: 5, full: true, placeholder: "Record fit, finish and workmanship observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record snagging or corrective action." }
-      ]
-    },
-    {
-      code: "F08",
-      title: "Detail / Threshold Check",
-      note: "Thresholds, margins and local details review.",
-      fields: [
-        { id: "date", label: "Check Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "sampleLocation", label: "Detail Location", type: "text", placeholder: "Threshold / perimeter / local detail" },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Acceptable", fail: "Issue Identified" } },
-        { id: "checks", label: "Detail Notes", type: "textarea", rows: 5, full: true, placeholder: "Record margins, thresholds and local detail observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record detail adjustments or rectification." }
-      ]
-    },
-    {
-      code: "F09",
-      title: "Protection Review",
-      note: "Installed floor protection and traffic control.",
-      fields: [
-        { id: "date", label: "Review Date", type: "date" },
-        { id: "inspector", label: "Reviewed By", type: "text", placeholder: "Enter name" },
-        { id: "protectionStatus", label: "Protection Status", type: "select", options: ["In Place", "Damaged", "Not In Place"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Acceptable", fail: "Issue Identified" } },
-        { id: "checks", label: "Review Notes", type: "textarea", rows: 5, full: true, placeholder: "Record protection and access arrangements." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record replacement or traffic control action." }
-      ]
-    },
-    {
-      code: "F10",
-      title: "Substrate Readiness Review",
-      note: "Secondary readiness / interface check.",
-      fields: [
-        { id: "date", label: "Review Date", type: "date" },
-        { id: "inspector", label: "Reviewed By", type: "text", placeholder: "Enter name" },
-        { id: "substrate", label: "Interface Condition", type: "select", options: ["Acceptable", "Minor Issue", "Unacceptable"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Ready", fail: "Not Ready" } },
-        { id: "checks", label: "Review Notes", type: "textarea", rows: 5, full: true, placeholder: "Record interface or readiness observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record enabling or remedial works." }
-      ]
-    },
-    {
-      code: "F11",
-      title: "Hardwood Installation Record",
-      note: "Primary installation record.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "installStage", label: "Installation Status", type: "select", options: ["Accepted", "Accepted with Comments", "Rejected"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "hold", "fail"], labels: { pass: "Accepted", hold: "Hold Point", fail: "Rejected" } },
-        { id: "checks", label: "Installation Notes", type: "textarea", rows: 5, full: true, placeholder: "Record primary installation quality and observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record snag closure or approvals required." }
-      ]
-    },
-    {
-      code: "F12",
-      title: "Final Sign-Off",
-      note: "Completion hold point and release.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Release Date", type: "date" },
-        { id: "inspector", label: "Released By", type: "text", placeholder: "Enter name" },
-        { id: "releaseStatus", label: "Release Status", type: "select", options: ["Released", "Released with Comments", "Not Released"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "hold"], labels: { pass: "Released", hold: "Hold Point" } },
-        { id: "checks", label: "Release Notes", type: "textarea", rows: 5, full: true, placeholder: "Record sign-off basis and final observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record residual actions or approvals." }
-      ]
-    }
-  ],
-  tiling: [
-    {
-      code: "F00",
-      title: "Benchmark Acceptance",
-      note: "Tiling benchmark approval.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "areaRef", label: "Area Reference", type: "text", placeholder: "Block / level / area ref" },
-        { id: "benchmarkOutcome", label: "Benchmark Outcome", type: "select", options: ["Accepted", "Accepted with Comments", "Rejected"] },
-        { id: "checks", label: "Benchmark Notes", type: "textarea", rows: 5, full: true, placeholder: "Record benchmark setting out and finish observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record approval conditions or further action." }
-      ]
-    },
-    {
-      code: "F01",
-      title: "Area Release Check",
-      note: "Area release and access readiness.",
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "areaRelease", label: "Area Release", type: "select", options: ["Released", "Not Released"] },
-        { id: "accessStatus", label: "Access / Logistics", type: "select", options: ["Available", "Restricted", "Blocked"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Pass", fail: "Fail" } },
-        { id: "checks", label: "Inspection Notes", type: "textarea", rows: 5, full: true, placeholder: "Record area readiness and access constraints." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record enabling or coordination action." }
-      ]
-    },
-    {
-      code: "F02",
-      title: "Material Delivery Log",
-      note: "Tiles, adhesive, grout and trims checked on arrival.",
-      fields: [
-        { id: "date", label: "Delivery Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "deliveryRef", label: "Delivery Ref", type: "text", placeholder: "Enter delivery note / ticket ref" },
-        { id: "materialType", label: "Material Type", type: "text", placeholder: "Enter material description" },
-        { id: "status", label: "Delivery Status", type: "select", options: ["pass", "fail"], labels: { pass: "Accepted", fail: "Rejected" } },
-        { id: "checks", label: "Delivery Notes", type: "textarea", rows: 5, full: true, placeholder: "Record quantity, batch and condition." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record quarantine or replacement action." }
-      ]
-    },
-    {
-      code: "F03",
-      title: "Substrate Readiness",
-      note: "Substrate suitability for tile installation.",
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "substrate", label: "Substrate Condition", type: "select", options: ["Acceptable", "Minor Issue", "Unacceptable"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Pass", fail: "Fail" } },
-        { id: "checks", label: "Inspection Notes", type: "textarea", rows: 5, full: true, placeholder: "Record substrate readiness and suitability." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record preparation or remedial action." }
-      ]
-    },
-    {
-      code: "F04",
-      title: "Setting Out Hold Point",
-      note: "Setting out approval before installation.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Check Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "designRef", label: "Setting Out Ref", type: "text", placeholder: "Drawing / tile layout ref" },
-        { id: "status", label: "Result", type: "select", options: ["pass", "hold", "fail"], labels: { pass: "Approved", hold: "Hold Point", fail: "Rejected" } },
-        { id: "checks", label: "Set-Out Notes", type: "textarea", rows: 5, full: true, placeholder: "Record setting out, joints and layout." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record amendments or approvals required." }
-      ]
-    },
-    {
-      code: "F05",
-      title: "Adhesive / Primer Check",
-      note: "Primer and adhesive system verification.",
-      fields: [
-        { id: "date", label: "Check Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "fixingType", label: "Primer / Adhesive Type", type: "text", placeholder: "Enter product / system" },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Compliant", fail: "Non-Compliant" } },
-        { id: "checks", label: "Check Notes", type: "textarea", rows: 5, full: true, placeholder: "Record system compliance and observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record replacement or corrective action." }
-      ]
-    },
-    {
-      code: "F06",
-      title: "Tile Batch / Shade Review",
-      note: "Batch, shade and blend consistency check.",
-      fields: [
-        { id: "date", label: "Review Date", type: "date" },
-        { id: "inspector", label: "Reviewed By", type: "text", placeholder: "Enter name" },
-        { id: "batchRef", label: "Batch / Shade Ref", type: "text", placeholder: "Enter batch / shade reference" },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Acceptable", fail: "Issue Identified" } },
-        { id: "checks", label: "Review Notes", type: "textarea", rows: 5, full: true, placeholder: "Record visual blend and batch observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record segregation or replacement action." }
-      ]
-    },
-    {
-      code: "F07",
-      title: "Level / Lippage Check",
-      note: "Level and lippage compliance review.",
-      fields: [
-        { id: "date", label: "Check Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "sampleLocation", label: "Check Location", type: "text", placeholder: "Area / point checked" },
-        { id: "resultValue", label: "Measured Result", type: "text", placeholder: "Enter level / lippage result" },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Within Tolerance", fail: "Outside Tolerance" } },
-        { id: "checks", label: "Check Notes", type: "textarea", rows: 5, full: true, placeholder: "Record lippage and level observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record corrective action or re-check." }
-      ]
-    },
-    {
-      code: "F08",
-      title: "Installation Inspection",
-      note: "Main installation QA record.",
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "installStage", label: "Installation Stage", type: "select", options: ["Started", "In Progress", "Complete"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Pass", fail: "Fail" } },
-        { id: "checks", label: "Installation Notes", type: "textarea", rows: 5, full: true, placeholder: "Record tile installation and workmanship observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record snagging or corrective action." }
-      ]
-    },
-    {
-      code: "F09",
-      title: "Grout / Finish Review",
-      note: "Grout, finish and detailing check.",
-      fields: [
-        { id: "date", label: "Review Date", type: "date" },
-        { id: "inspector", label: "Reviewed By", type: "text", placeholder: "Enter name" },
-        { id: "finishStatus", label: "Finish Quality", type: "select", options: ["Acceptable", "Minor Issue", "Defect Present"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Acceptable", fail: "Issue Identified" } },
-        { id: "checks", label: "Review Notes", type: "textarea", rows: 5, full: true, placeholder: "Record grout, finish and detail observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record remedial action." }
-      ]
-    },
-    {
-      code: "F10",
-      title: "Protection Review",
-      note: "Protection and access control after install.",
-      fields: [
-        { id: "date", label: "Review Date", type: "date" },
-        { id: "inspector", label: "Reviewed By", type: "text", placeholder: "Enter name" },
-        { id: "protectionStatus", label: "Protection Status", type: "select", options: ["In Place", "Damaged", "Not In Place"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "fail"], labels: { pass: "Acceptable", fail: "Issue Identified" } },
-        { id: "checks", label: "Review Notes", type: "textarea", rows: 5, full: true, placeholder: "Record protection and traffic control." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record replacement or further protection action." }
-      ]
-    },
-    {
-      code: "F11",
-      title: "Tile Installation Record",
-      note: "Primary installation record.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "installStage", label: "Installation Status", type: "select", options: ["Accepted", "Accepted with Comments", "Rejected"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "hold", "fail"], labels: { pass: "Accepted", hold: "Hold Point", fail: "Rejected" } },
-        { id: "checks", label: "Installation Notes", type: "textarea", rows: 5, full: true, placeholder: "Record primary installation quality and observations." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record snag closure or approvals required." }
-      ]
-    },
-    {
-      code: "F12",
-      title: "Final Inspection",
-      note: "Completion and release.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Released By", type: "text", placeholder: "Enter name" },
-        { id: "releaseStatus", label: "Release Status", type: "select", options: ["Released", "Released with Comments", "Not Released"] },
-        { id: "status", label: "Result", type: "select", options: ["pass", "hold"], labels: { pass: "Released", hold: "Hold Point" } },
-        { id: "checks", label: "Inspection Notes", type: "textarea", rows: 5, full: true, placeholder: "Record final inspection and release basis." },
-        { id: "followUp", label: "Actions / Follow-Up", type: "textarea", rows: 4, full: true, placeholder: "Record residual actions or approvals." }
-      ]
-    }
-  ]
+  cb: makeGenericScopeForms("Cradle & Batten"),
+  raf: makeGenericScopeForms("Raised Access Floor"),
+  hw: makeGenericScopeForms("Hardwood Flooring"),
+  tiling: makeGenericScopeForms("Tiling")
 };
 
 const SCOPE_META = {
@@ -1064,6 +348,75 @@ function renderOverviewStats() {
   `;
 }
 
+function goToActions() {
+  if (!currentProject) return;
+  document.getElementById("actionsContextText").textContent = `${currentProject.name} · ${currentProject.code || ""}`;
+  renderActionCards();
+  showView("actions");
+}
+
+function renderActionCards() {
+  const wrap = document.getElementById("actionCards");
+  wrap.innerHTML = "";
+
+  const projectActions = actions
+    .filter(a => String(a.project) === String(currentProject.id))
+    .sort((a, b) => b.id - a.id);
+
+  if (projectActions.length === 0) {
+    wrap.innerHTML = `
+      <div class="select-card">
+        <div class="select-card-top">
+          <h4>No actions</h4>
+          <p>No actions have been created for this project yet.</p>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  projectActions.forEach(action => {
+    wrap.innerHTML += `
+      <div class="select-card">
+        <div class="select-card-top">
+          <h4>${action.title}</h4>
+          <p>${action.locationName}</p>
+          <p>Assigned to: ${action.assignedTo || "Not set"}</p>
+          <p>Due: ${action.dueDate || "Not set"}</p>
+          <p>Status: ${formatActionStatus(action.actionStatus || "open")}</p>
+          <p>Source: ${action.sourceForm || "Record"}</p>
+        </div>
+        <div class="select-card-body">
+          <button class="btn btn-primary" onclick="cycleActionStatus(${action.id})">Update Status</button>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function cycleActionStatus(actionId) {
+  const action = actions.find(a => String(a.id) === String(actionId));
+  if (!action) return;
+
+  if (action.actionStatus === "open") {
+    action.actionStatus = "in_progress";
+  } else if (action.actionStatus === "in_progress") {
+    action.actionStatus = "closed";
+  } else {
+    action.actionStatus = "open";
+  }
+
+  safeSave();
+  renderActionCards();
+}
+
+function formatActionStatus(status) {
+  if (status === "open") return "Open";
+  if (status === "in_progress") return "In Progress";
+  if (status === "closed") return "Closed";
+  return status;
+}
+
 function goToScopes() {
   if (!currentProject) return;
 
@@ -1130,6 +483,7 @@ function selectLocation(locationId) {
     `${currentProject.name} · ${SCOPE_META[currentScope].title} · ${currentLocation.name}`;
 
   renderFormCards();
+  renderLocationHistory();
   showView("forms");
 }
 
@@ -1155,9 +509,69 @@ function renderFormCards() {
   });
 }
 
+function renderLocationHistory() {
+  const wrap = document.getElementById("locationHistoryCards");
+  wrap.innerHTML = "";
+
+  const history = forms
+    .filter(f =>
+      String(f.project) === String(currentProject.id) &&
+      String(f.location) === String(currentLocation.id)
+    )
+    .sort((a, b) => b.id - a.id);
+
+  if (history.length === 0) {
+    wrap.innerHTML = `
+      <div class="select-card">
+        <div class="select-card-top">
+          <h4>No records yet</h4>
+          <p>No inspection history has been recorded for this location.</p>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  history.forEach(record => {
+    wrap.innerHTML += `
+      <div class="select-card">
+        <div class="select-card-top">
+          <h4>${record.type}</h4>
+          <p>Status: ${formatRecordStatus(record.status)}</p>
+          <p>User: ${record.user || "Not set"}</p>
+          <p>Date: ${(record.fieldData && record.fieldData.date) || "Not set"}</p>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function formatRecordStatus(status) {
+  if (status === "pass") return "Pass";
+  if (status === "fail") return "Fail";
+  if (status === "hold") return "Hold Point";
+  return status;
+}
+
 function renderField(field) {
   const fullClass = field.full ? "full" : "";
   const value = getDefaultFieldValue(field);
+
+  if (field.type === "select-users") {
+    const options = users.map(u => {
+      const selected = String(value) === String(u.name) ? "selected" : "";
+      return `<option value="${u.name}" ${selected}>${u.name}</option>`;
+    }).join("");
+
+    return `
+      <div class="${fullClass}">
+        <label class="field-label" for="dyn_${field.id}">${field.label}</label>
+        <select id="dyn_${field.id}" data-field-id="${field.id}">
+          ${options}
+        </select>
+      </div>
+    `;
+  }
 
   if (field.type === "select") {
     const options = field.options.map(opt => {
@@ -1190,7 +604,32 @@ function renderField(field) {
       <label class="field-label" for="dyn_${field.id}">${field.label}</label>
       <input id="dyn_${field.id}" data-field-id="${field.id}" type="${field.type || "text"}" value="${value || ""}" placeholder="${field.placeholder || ""}" />
     </div>
-    `;
+  `;
+}
+
+function getCommonActionFields() {
+  return [
+    {
+      id: "actionAssignee",
+      label: "Assign Action To",
+      type: "select-users",
+      full: false
+    },
+    {
+      id: "actionDueDate",
+      label: "Action Due Date",
+      type: "date",
+      full: false
+    },
+    {
+      id: "actionStatus",
+      label: "Action Status",
+      type: "select",
+      options: ["open", "in_progress", "closed"],
+      labels: { open: "Open", in_progress: "In Progress", closed: "Closed" },
+      full: false
+    }
+  ];
 }
 
 function getDefaultFieldValue(field) {
@@ -1206,6 +645,20 @@ function getDefaultFieldValue(field) {
   if (field.id === "status") {
     if (currentForm && currentForm.hold) return "hold";
     return "pass";
+  }
+
+  if (field.id === "actionAssignee") {
+    return currentUser || "";
+  }
+
+  if (field.id === "actionDueDate") {
+    const due = new Date();
+    due.setDate(due.getDate() + 3);
+    return due.toISOString().split("T")[0];
+  }
+
+  if (field.id === "actionStatus") {
+    return "open";
   }
 
   return "";
@@ -1234,8 +687,9 @@ function openFormEntry(formIndex) {
     holdWarning.classList.add("hidden");
   }
 
+  const allFields = [...(currentForm.fields || []), ...getCommonActionFields()];
   const dynamicWrap = document.getElementById("dynamicFormFields");
-  dynamicWrap.innerHTML = (currentForm.fields || []).map(renderField).join("");
+  dynamicWrap.innerHTML = allFields.map(renderField).join("");
 
   showView("entry");
 }
@@ -1248,8 +702,10 @@ function getFieldValue(fieldId) {
 function submitEntry() {
   if (!currentProject || !currentScope || !currentLocation || !currentForm) return;
 
+  const allFields = [...(currentForm.fields || []), ...getCommonActionFields()];
   const dynamicValues = {};
-  (currentForm.fields || []).forEach(field => {
+
+  allFields.forEach(field => {
     dynamicValues[field.id] = getFieldValue(field.id);
   });
 
@@ -1277,10 +733,17 @@ function submitEntry() {
     actions.push({
       id: Date.now() + 1,
       project: currentProject.id,
-      title: `${currentForm.code} ${currentForm.title} issue`,
-      assigned: currentUser,
-      locationName: currentLocation.name,
       scope: currentScope,
+      scopeTitle: SCOPE_META[currentScope].title,
+      location: currentLocation.id,
+      locationName: currentLocation.name,
+      sourceForm: `${currentForm.code} · ${currentForm.title}`,
+      title: `${currentForm.code} ${currentForm.title} issue`,
+      assignedTo: dynamicValues.actionAssignee || currentUser,
+      createdBy: currentUser,
+      createdDate: dynamicValues.date || "",
+      dueDate: dynamicValues.actionDueDate || "",
+      actionStatus: dynamicValues.actionStatus || "open",
       status: recordStatus,
       notes: dynamicValues.followUp || ""
     });
@@ -1288,7 +751,8 @@ function submitEntry() {
 
   safeSave();
   alert("Record submitted.");
-  selectProject(currentProject.id);
+  selectLocation(currentLocation.id);
+  showView("forms");
 }
 
 function init() {
