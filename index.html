@@ -56,4 +56,130 @@
         <h3>Select a project to continue</h3>
       </div>
 
-      <div class="card-grid" id="projectCards"></div
+      <div class="card-grid" id="projectCards"></div>
+    </main>
+  </section>
+
+  <!-- PROJECT OVERVIEW -->
+  <section class="view" id="view-overview">
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="header-brand">
+          <div class="brand-mark small">AJK</div>
+          <div class="header-copy">
+            <h2 id="overviewProjectTitle">Project Overview</h2>
+            <p id="overviewProjectSub">Package summary</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-secondary btn-small" onclick="showView('projects')">Change Project</button>
+          <button class="btn btn-secondary btn-small" onclick="logout()">Log Out</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-shell narrow">
+      <div class="summary-card">
+        <div class="summary-row">
+          <span class="summary-label">Project</span>
+          <span class="summary-value" id="summaryProjectName">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Package Ref</span>
+          <span class="summary-value" id="summaryProjectCode">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Main Contractor</span>
+          <span class="summary-value" id="summaryProjectPackage">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Active User</span>
+          <span class="summary-value" id="summaryUser">—</span>
+        </div>
+      </div>
+
+      <div class="stats-grid" id="overviewStats"></div>
+
+      <button class="btn btn-primary" onclick="goToScopes()">Select Scope of Works</button>
+    </main>
+  </section>
+
+  <!-- SCOPE SELECTION -->
+  <section class="view" id="view-scopes">
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="header-brand">
+          <div class="brand-mark small">AJK</div>
+          <div class="header-copy">
+            <h2>Scope Selection</h2>
+            <p id="scopeProjectTitle">Active project</p>
+          </div>
+        </div>
+        <button class="btn btn-secondary btn-small" onclick="showView('overview')">Back</button>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <div class="page-intro">
+        <div class="eyebrow">Scope of Works</div>
+        <h3>Select the package you are working within</h3>
+      </div>
+
+      <div class="card-grid" id="scopeCards"></div>
+    </main>
+  </section>
+
+  <!-- LOCATION SELECTION -->
+  <section class="view" id="view-locations">
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="header-brand">
+          <div class="brand-mark small">AJK</div>
+          <div class="header-copy">
+            <h2>Location Selection</h2>
+            <p id="locationContextText">Project / scope</p>
+          </div>
+        </div>
+        <button class="btn btn-secondary btn-small" onclick="showView('scopes')">Back</button>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <div class="page-intro">
+        <div class="eyebrow">Location / Area</div>
+        <h3>Select the relevant plot, level, apartment or room</h3>
+      </div>
+
+      <div class="card-grid" id="locationCards"></div>
+    </main>
+  </section>
+
+  <!-- FORM SELECTION -->
+  <section class="view" id="view-forms">
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="header-brand">
+          <div class="brand-mark small">AJK</div>
+          <div class="header-copy">
+            <h2>Form Selection</h2>
+            <p id="formContextText">Project / scope / location</p>
+          </div>
+        </div>
+        <button class="btn btn-secondary btn-small" onclick="showView('locations')">Back</button>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <div class="page-intro">
+        <div class="eyebrow">Available Forms</div>
+        <h3>Select the required record</h3>
+      </div>
+
+      <div class="card-grid" id="formCards"></div>
+    </main>
+  </section>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
