@@ -55,540 +55,558 @@ function checklistField(id, label) {
 
 const FORM_LIBRARY = {
   screed: [
-    {
-      code: "F00",
-      title: "Benchmark Acceptance",
-      note: "Initial benchmark pour approval before production works commence.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "areaRef", label: "Benchmark Area Reference", type: "text", placeholder: "Plot / level / room / benchmark ref" },
-        { id: "mixRef", label: "Mix Reference", type: "text", placeholder: "Approved mix reference" },
-        { id: "weather", label: "Weather / Ambient Conditions", type: "text", placeholder: "Dry / temperature / general conditions" },
+screed: [
+  {
+    code: "F00",
+    title: "Benchmark Acceptance",
+    note: "Initial benchmark pour approval before production works commence.",
+    hold: true,
+    fields: [
+      { id: "date", label: "Inspection Date", type: "date" },
+      { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
+      { id: "areaRef", label: "Benchmark Area Reference", type: "text", placeholder: "Plot / level / room / benchmark ref" },
+      { id: "mixRef", label: "Mix Reference", type: "text", placeholder: "Approved mix reference" },
+      { id: "weather", label: "Weather / Ambient Conditions", type: "text", placeholder: "Dry / temperature / general conditions" },
 
-        checklistField("benchmark_substrate_ready", "Substrate / build-up ready and compliant"),
-        checklistField("benchmark_membrane_correct", "Slip membrane / separation layer correct"),
-        checklistField("benchmark_thickness_achieved", "Thickness achieved to requirement"),
-        checklistField("benchmark_finish_acceptable", "Surface finish acceptable"),
-        checklistField("benchmark_edges_details_acceptable", "Edges / interfaces / local details acceptable"),
-        checklistField("benchmark_curing_method_confirmed", "Curing approach confirmed"),
-        checklistField("benchmark_accepted_as_standard", "Benchmark accepted as production standard"),
+      checklistField("benchmark_substrate_ready", "Substrate / build-up ready and compliant"),
+      checklistField("benchmark_membrane_correct", "Slip membrane / separation layer correct"),
+      checklistField("benchmark_thickness_achieved", "Thickness achieved to requirement"),
+      checklistField("benchmark_finish_acceptable", "Surface finish consistent with approved benchmark"),
+      checklistField("benchmark_edges_details_acceptable", "Edges / interfaces / local details acceptable"),
+      checklistField("benchmark_curing_method_confirmed", "Curing approach confirmed"),
+      checklistField("benchmark_accepted_as_standard", "Benchmark accepted as production standard"),
 
-        {
-          id: "status",
-          label: "Benchmark Outcome",
-          type: "select",
-          options: ["pass", "fail", "hold"],
-          labels: { pass: "Accepted", fail: "Rejected", hold: "Hold Point" }
-        },
-        {
-          id: "checks",
-          label: "Benchmark Notes",
-          type: "textarea",
-          rows: 5,
-          full: true,
-          placeholder: "Record acceptance basis, observations, limitations or agreed amendments."
-        },
-        {
-          id: "followUp",
-          label: "Actions / Follow-Up",
-          type: "textarea",
-          rows: 4,
-          full: true,
-          placeholder: "Record any conditions, further benchmarking or corrective action."
-        }
-      ]
-    },
-    {
-      code: "F01",
-      title: "Pre-Pour Checklist",
-      note: "Area release, substrate, membrane and insulation checks prior to screed placement.",
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "areaRef", label: "Area Reference", type: "text", placeholder: "Plot / level / apartment / room" },
-        { id: "pourRef", label: "Pour Reference", type: "text", placeholder: "Pour no. / area sequence" },
-        { id: "designRef", label: "Drawing / Design Reference", type: "text", placeholder: "Relevant drawing or build-up ref" },
+      {
+        id: "status",
+        label: "Benchmark Outcome",
+        type: "select",
+        options: ["pass", "fail", "hold"],
+        labels: { pass: "Accepted", fail: "Rejected", hold: "Hold Point" }
+      },
+      {
+        id: "checks",
+        label: "Benchmark Notes",
+        type: "textarea",
+        rows: 5,
+        full: true,
+        placeholder: "Record acceptance basis, observations, limitations or agreed amendments."
+      },
+      {
+        id: "followUp",
+        label: "Actions / Follow-Up",
+        type: "textarea",
+        rows: 4,
+        full: true,
+        placeholder: "Record any conditions, further benchmarking or corrective action."
+      }
+    ]
+  },
+  {
+    code: "F01",
+    title: "Pre-Pour Area Release",
+    note: "Area release, substrate, membrane and insulation checks prior to screed placement.",
+    hold: true,
+    fields: [
+      { id: "date", label: "Inspection Date", type: "date" },
+      { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
+      { id: "areaRef", label: "Area Reference", type: "text", placeholder: "Plot / level / apartment / room" },
+      { id: "pourRef", label: "Pour Reference", type: "text", placeholder: "Pour no. / area sequence" },
+      { id: "designRef", label: "Drawing / Design Reference", type: "text", placeholder: "Relevant drawing or build-up ref" },
 
-        checklistField("area_release_received", "Area formally released for screed works"),
-        checklistField("access_logistics_ok", "Access / logistics suitable for pour"),
-        checklistField("substrate_condition_ok", "Substrate condition acceptable"),
-        checklistField("substrate_clean", "Substrate clean and free from debris / contamination"),
-        checklistField("no_standing_water", "No standing water present"),
-        checklistField("membrane_installed_correctly", "Slip membrane installed correctly"),
-        checklistField("membrane_laps_sealed", "Membrane laps / joints sealed where required"),
-        checklistField("insulation_build_up_correct", "Insulation build-up correct"),
-        checklistField("insulation_condition_ok", "Insulation condition acceptable"),
-        checklistField("perimeter_isolation_installed", "Perimeter isolation / edge strip installed"),
-        checklistField("service_penetrations_dealt_with", "Service penetrations / interfaces dealt with"),
-        checklistField("levels_datums_confirmed", "Relevant levels / datums confirmed"),
-        checklistField("adjacent_workfaces_protected", "Adjacent completed work protected"),
-        checklistField("area_ready_for_pour", "Area ready for screed pour"),
+      checklistField("area_release_received", "Area formally released for screed works"),
+      checklistField("access_logistics_ok", "Access / logistics suitable for pour"),
+      checklistField("substrate_condition_ok", "Substrate condition acceptable"),
+      checklistField("substrate_clean", "Substrate clean and free from debris / contamination"),
+      checklistField("no_standing_water", "No standing water present"),
+      checklistField("membrane_installed_correctly", "Slip membrane installed correctly"),
+      checklistField("membrane_laps_sealed", "Membrane laps / joints sealed where required"),
+      checklistField("insulation_build_up_correct", "Insulation build-up correct"),
+      checklistField("insulation_condition_ok", "Insulation condition acceptable"),
+      checklistField("perimeter_isolation_installed", "Perimeter isolation / edge strip installed"),
+      checklistField("service_penetrations_dealt_with", "Service penetrations / interfaces dealt with"),
+      checklistField("levels_datums_confirmed", "Relevant levels / datums confirmed"),
+      checklistField("adjacent_workfaces_protected", "Adjacent completed work protected"),
+      checklistField("area_ready_for_pour", "Area ready for screed pour"),
 
-        {
-          id: "status",
-          label: "Result",
-          type: "select",
-          options: ["pass", "fail", "hold"],
-          labels: { pass: "Pass", fail: "Fail", hold: "Hold Point" }
-        },
-        {
-          id: "checks",
-          label: "Inspection Notes",
-          type: "textarea",
-          rows: 5,
-          full: true,
-          placeholder: "Record any non-conformances, interface issues or constraints before pour."
-        },
-        {
-          id: "followUp",
-          label: "Actions / Follow-Up",
-          type: "textarea",
-          rows: 4,
-          full: true,
-          placeholder: "Record rectification, hold points or approval requirements."
-        }
-      ]
-    },
-    {
-      code: "F02",
-      title: "Batching Record Sheet",
-      note: "Material batching and mix control for the screed pour.",
-      fields: [
-        { id: "date", label: "Batch Date", type: "date" },
-        { id: "inspector", label: "Supervisor / Checker", type: "text", placeholder: "Enter name" },
-        { id: "areaRef", label: "Area Reference", type: "text", placeholder: "Plot / level / room / pour area" },
-        { id: "mixRef", label: "Approved Mix Reference", type: "text", placeholder: "Mix design / approval ref" },
-        { id: "batchNo", label: "Batch Number", type: "text", placeholder: "Enter batch number" },
-        { id: "materialTicketRef", label: "Delivery / Ticket Reference", type: "text", placeholder: "Ticket / docket reference" },
+      {
+        id: "status",
+        label: "Result",
+        type: "select",
+        options: ["pass", "fail", "hold"],
+        labels: { pass: "Pass", fail: "Fail", hold: "Hold Point" }
+      },
+      {
+        id: "checks",
+        label: "Inspection Notes",
+        type: "textarea",
+        rows: 5,
+        full: true,
+        placeholder: "Record any non-conformances, interface issues or constraints before pour."
+      },
+      {
+        id: "followUp",
+        label: "Actions / Follow-Up",
+        type: "textarea",
+        rows: 4,
+        full: true,
+        placeholder: "Record rectification, hold points or approval requirements."
+      }
+    ]
+  },
+  {
+    code: "F02",
+    title: "Material Delivery Log",
+    note: "Material receipt and delivery verification for screed works.",
+    fields: [
+      { id: "date", label: "Delivery Date", type: "date" },
+      { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
+      { id: "deliveryRef", label: "Delivery / Ticket Ref", type: "text", placeholder: "Enter delivery note / ticket ref" },
+      { id: "materialType", label: "Material Type", type: "text", placeholder: "Enter material description" },
 
-        checklistField("cement_checked", "Cement / binder checked"),
-        checklistField("aggregate_checked", "Aggregate checked"),
-        checklistField("water_content_controlled", "Water content controlled"),
-        checklistField("additives_checked", "Additives checked"),
-        checklistField("fibre_checked", "Fibres checked where applicable"),
-        checklistField("batch_sequence_followed", "Batching sequence followed"),
-        checklistField("mix_consistency_acceptable", "Mix consistency acceptable"),
-        checklistField("batch_traceability_recorded", "Batch traceability recorded"),
+      checklistField("materials_match_order", "Materials match order / approval"),
+      checklistField("materials_in_good_condition", "Materials received in acceptable condition"),
+      checklistField("delivery_documentation_present", "Delivery documentation present"),
+      checklistField("traceability_checked", "Traceability checked"),
+      checklistField("storage_arrangements_ok", "Storage / protection arrangements acceptable"),
 
-        {
-          id: "status",
-          label: "Batch Result",
-          type: "select",
-          options: ["pass", "fail"],
-          labels: { pass: "Accepted", fail: "Rejected" }
-        },
-        {
-          id: "checks",
-          label: "Batch Notes",
-          type: "textarea",
-          rows: 5,
-          full: true,
-          placeholder: "Record quantities, deviations, batch observations and relevant references."
-        },
-        {
-          id: "followUp",
-          label: "Actions / Follow-Up",
-          type: "textarea",
-          rows: 4,
-          full: true,
-          placeholder: "Record rejected batch action, segregation, quarantine or escalation."
-        }
-      ]
-    },
-    {
-      code: "F03",
-      title: "Thickness Level Log",
-      note: "Thickness and level checks during screed placement.",
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        { id: "areaRef", label: "Area Reference", type: "text", placeholder: "Plot / level / room / test point" },
-        { id: "designRef", label: "Drawing / Datum Reference", type: "text", placeholder: "FFL / build-up / datum ref" },
-        { id: "specifiedThickness", label: "Specified Thickness", type: "text", placeholder: "e.g. 65mm" },
-        { id: "measuredThickness", label: "Measured Thickness", type: "text", placeholder: "Enter measured thickness" },
-        { id: "specifiedLevel", label: "Specified Level / Datum", type: "text", placeholder: "Enter specified level if relevant" },
-        { id: "measuredLevel", label: "Measured Level / Datum", type: "text", placeholder: "Enter measured level" },
+      {
+        id: "status",
+        label: "Delivery Status",
+        type: "select",
+        options: ["pass", "fail"],
+        labels: { pass: "Accepted", fail: "Rejected / Quarantined" }
+      },
+      {
+        id: "checks",
+        label: "Delivery Notes",
+        type: "textarea",
+        rows: 5,
+        full: true,
+        placeholder: "Record quantities, condition and traceability notes."
+      },
+      {
+        id: "followUp",
+        label: "Actions / Follow-Up",
+        type: "textarea",
+        rows: 4,
+        full: true,
+        placeholder: "Record rejection, quarantine or replacement action."
+      }
+    ]
+  },
+  {
+    code: "F03",
+    title: "Batching Record Sheet",
+    note: "Material batching and mix control for the screed pour.",
+    fields: [
+      { id: "date", label: "Batch Date", type: "date" },
+      { id: "inspector", label: "Supervisor / Checker", type: "text", placeholder: "Enter name" },
+      { id: "areaRef", label: "Area Reference", type: "text", placeholder: "Plot / level / room / pour area" },
+      { id: "mixRef", label: "Approved Mix Reference", type: "text", placeholder: "Mix design / approval ref" },
+      { id: "batchNo", label: "Batch Number", type: "text", placeholder: "Enter batch number" },
+      { id: "materialTicketRef", label: "Delivery / Ticket Reference", type: "text", placeholder: "Ticket / docket reference" },
 
-        checklistField("measurement_location_correct", "Measurement location appropriate"),
-        checklistField("measurement_method_followed", "Measurement method followed correctly"),
-        checklistField("thickness_within_tolerance", "Thickness within tolerance"),
-        checklistField("level_within_tolerance", "Level / datum within tolerance"),
-        checklistField("recorded_immediately", "Result recorded at time of check"),
+      checklistField("cement_checked", "Cement / binder checked"),
+      checklistField("aggregate_checked", "Aggregate checked"),
+      checklistField("water_content_controlled", "Water content controlled"),
+      checklistField("additives_checked", "Additives checked"),
+      checklistField("fibre_checked", "Fibres checked where applicable"),
+      checklistField("batch_sequence_followed", "Batching sequence followed"),
+      checklistField("mix_consistency_acceptable", "Mix consistency acceptable"),
+      checklistField("batch_traceability_recorded", "Batch traceability recorded"),
 
-        {
-          id: "status",
-          label: "Result",
-          type: "select",
-          options: ["pass", "fail"],
-          labels: { pass: "Within Tolerance", fail: "Outside Tolerance" }
-        },
-        {
-          id: "checks",
-          label: "Inspection Notes",
-          type: "textarea",
-          rows: 5,
-          full: true,
-          placeholder: "Record thickness / level readings, tolerance issues and observations."
-        },
-        {
-          id: "followUp",
-          label: "Actions / Follow-Up",
-          type: "textarea",
-          rows: 4,
-          full: true,
-          placeholder: "Record re-check requirements, remedial action or escalation."
-        }
-      ]
-    },
-    {
-      code: "F04",
-      title: "SR Test Record",
-      note: "Surface regularity testing to confirm compliance with specified SR class.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Test Date", type: "date" },
-        { id: "inspector", label: "Tested By", type: "text", placeholder: "Enter name" },
-        { id: "areaRef", label: "Area Reference", type: "text", placeholder: "Plot / level / room / area" },
-        { id: "srClass", label: "Specified SR Class", type: "select", options: ["SR1", "SR2", "SR3"] },
-        { id: "sampleLocation", label: "Test Location", type: "text", placeholder: "Room / area / test point" },
-        { id: "resultValue", label: "Measured Deviation", type: "text", placeholder: "e.g. 3mm" },
+      {
+        id: "status",
+        label: "Batch Result",
+        type: "select",
+        options: ["pass", "fail"],
+        labels: { pass: "Accepted", fail: "Rejected" }
+      },
+      {
+        id: "checks",
+        label: "Batch Notes",
+        type: "textarea",
+        rows: 5,
+        full: true,
+        placeholder: "Record quantities, deviations, batch observations and relevant references."
+      },
+      {
+        id: "followUp",
+        label: "Actions / Follow-Up",
+        type: "textarea",
+        rows: 4,
+        full: true,
+        placeholder: "Record rejected batch action, segregation, quarantine or escalation."
+      }
+    ]
+  },
+  {
+    code: "F04",
+    title: "Thickness / Level Log",
+    note: "Thickness and level checks during screed placement.",
+    fields: [
+      { id: "date", label: "Inspection Date", type: "date" },
+      { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
+      { id: "areaRef", label: "Area Reference", type: "text", placeholder: "Plot / level / room / test point" },
+      { id: "designRef", label: "Drawing / Datum Reference", type: "text", placeholder: "FFL / build-up / datum ref" },
+      { id: "specifiedThickness", label: "Specified Thickness", type: "text", placeholder: "e.g. 65mm" },
+      { id: "measuredThickness", label: "Measured Thickness", type: "text", placeholder: "Enter measured thickness" },
+      { id: "specifiedLevel", label: "Specified Level / Datum", type: "text", placeholder: "Enter specified level if relevant" },
+      { id: "measuredLevel", label: "Measured Level / Datum", type: "text", placeholder: "Enter measured level" },
 
-        checklistField("test_locations_representative", "Test locations representative"),
-        checklistField("straightedge_method_followed", "Straightedge method followed correctly"),
-        checklistField("results_checked_against_spec", "Results checked against specified SR class"),
-        checklistField("surface_ready_for_assessment", "Surface ready for assessment"),
+      checklistField("measurement_location_correct", "Measurement location appropriate"),
+      checklistField("measurement_method_followed", "Measurement method followed correctly"),
+      checklistField("thickness_within_tolerance", "Thickness within tolerance"),
+      checklistField("level_within_tolerance", "Level / datum within tolerance"),
+      checklistField("recorded_immediately", "Result recorded at time of check"),
 
-        {
-          id: "status",
-          label: "Result",
-          type: "select",
-          options: ["pass", "fail", "hold"],
-          labels: { pass: "Pass", fail: "Fail", hold: "Hold Point" }
-        },
-        {
-          id: "checks",
-          label: "Test Notes",
-          type: "textarea",
-          rows: 5,
-          full: true,
-          placeholder: "Record test locations, readings, worst result and acceptance basis."
-        },
-        {
-          id: "followUp",
-          label: "Actions / Follow-Up",
-          type: "textarea",
-          rows: 4,
-          full: true,
-          placeholder: "Record rectification, re-test requirements or approval action."
-        }
-      ]
-    },
-    {
-      code: "F05",
-      title: "Moisture Test Report",
-      note: "Moisture test and pre-finish release check.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Test Date", type: "date" },
-        { id: "inspector", label: "Tested By", type: "text", placeholder: "Enter name" },
-        { id: "areaRef", label: "Area Reference", type: "text", placeholder: "Plot / level / room / area" },
-        { id: "deviceRef", label: "Device / Hygrometer Ref", type: "text", placeholder: "Enter device reference" },
-        { id: "sampleLocation", label: "Test Location", type: "text", placeholder: "Room / area / point" },
-        { id: "resultValue", label: "Measured RH / Moisture", type: "text", placeholder: "e.g. 75% RH" },
-        { id: "acceptanceCriteria", label: "Acceptance Criteria", type: "text", placeholder: "e.g. ≤ 75% RH" },
+      {
+        id: "status",
+        label: "Result",
+        type: "select",
+        options: ["pass", "fail"],
+        labels: { pass: "Within Tolerance", fail: "Outside Tolerance" }
+      },
+      {
+        id: "checks",
+        label: "Inspection Notes",
+        type: "textarea",
+        rows: 5,
+        full: true,
+        placeholder: "Record thickness / level readings, tolerance issues and observations."
+      },
+      {
+        id: "followUp",
+        label: "Actions / Follow-Up",
+        type: "textarea",
+        rows: 4,
+        full: true,
+        placeholder: "Record re-check requirements, remedial action or escalation."
+      }
+    ]
+  },
+  {
+    code: "F05",
+    title: "Post Pour Inspection",
+    note: "Initial post-pour visual inspection of screed condition and finish.",
+    fields: [
+      { id: "date", label: "Inspection Date", type: "date" },
+      { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
+      { id: "areaRef", label: "Area Reference", type: "text", placeholder: "Plot / level / room / area" },
 
-        checklistField("device_verified_suitable", "Test device verified / suitable"),
-        checklistField("test_location_representative", "Test location representative"),
-        checklistField("test_procedure_followed", "Test procedure followed correctly"),
-        checklistField("result_checked_against_criteria", "Result checked against acceptance criteria"),
-        checklistField("area_suitable_for_release_review", "Area suitable for release review"),
+      checklistField("surface_finish_matches_benchmark", "Surface finish consistent with approved benchmark"),
+      checklistField("no_significant_cracking", "No significant cracking observed"),
+      checklistField("no_segregation_laitance_hollows", "No segregation, laitance or hollow areas observed"),
+      checklistField("edges_interfaces_sound", "Edges / interfaces sound and acceptable"),
+      checklistField("general_area_condition_ok", "General area condition acceptable"),
 
-        {
-          id: "status",
-          label: "Result",
-          type: "select",
-          options: ["pass", "fail", "hold"],
-          labels: { pass: "Pass", fail: "Fail", hold: "Hold Point" }
-        },
-        {
-          id: "checks",
-          label: "Test Notes",
-          type: "textarea",
-          rows: 5,
-          full: true,
-          placeholder: "Record moisture readings, ambient conditions and suitability for finishes."
-        },
-        {
-          id: "followUp",
-          label: "Actions / Follow-Up",
-          type: "textarea",
-          rows: 4,
-          full: true,
-          placeholder: "Record drying, re-test or hold action."
-        }
-      ]
-    },
-    {
-      code: "F06",
-      title: "Drop Hammer Test Record",
-      note: "BRE drop hammer / screed strength testing.",
-      fields: [
-        { id: "date", label: "Test Date", type: "date" },
-        { id: "inspector", label: "Tested By", type: "text", placeholder: "Enter name" },
-        { id: "deviceRef", label: "Device Ref", type: "text", placeholder: "BRE tester reference" },
-        { id: "sampleLocation", label: "Test Location", type: "text", placeholder: "Room / test point" },
-        { id: "resultValue", label: "Measured Result", type: "text", placeholder: "Enter reading / classification" },
-        checklistField("test_method_followed", "Test method followed correctly"),
-        checklistField("location_representative", "Representative location selected"),
-        checklistField("result_checked", "Result reviewed against requirement"),
-        {
-          id: "status",
-          label: "Result",
-          type: "select",
-          options: ["pass", "fail"],
-          labels: { pass: "Pass", fail: "Fail" }
-        },
-        {
-          id: "checks",
-          label: "Test Notes",
-          type: "textarea",
-          rows: 5,
-          full: true,
-          placeholder: "Record drop hammer results and any concerns."
-        },
-        {
-          id: "followUp",
-          label: "Actions / Follow-Up",
-          type: "textarea",
-          rows: 4,
-          full: true,
-          placeholder: "Record further testing or remedial action."
-        }
-      ]
-    },
-    {
-      code: "F07",
-      title: "Curing Access Log",
-      note: "Curing and trafficking control log.",
-      fields: [
-        { id: "date", label: "Log Date", type: "date" },
-        { id: "inspector", label: "Supervisor", type: "text", placeholder: "Enter name" },
-        checklistField("curing_protection_intact", "Curing protection intact"),
-        checklistField("access_controlled", "Access controlled appropriately"),
-        checklistField("no_unauthorised_traffic", "No unauthorised trafficking observed"),
-        checklistField("area_condition_acceptable", "Area condition acceptable"),
-        {
-          id: "status",
-          label: "Overall Result",
-          type: "select",
-          options: ["pass", "fail"],
-          labels: { pass: "Acceptable", fail: "Issue Identified" }
-        },
-        {
-          id: "checks",
-          label: "Log Notes",
-          type: "textarea",
-          rows: 5,
-          full: true,
-          placeholder: "Record curing condition, access control and observations."
-        },
-        {
-          id: "followUp",
-          label: "Actions / Follow-Up",
-          type: "textarea",
-          rows: 4,
-          full: true,
-          placeholder: "Record access control or remedial action."
-        }
-      ]
-    },
-    {
-      code: "F08",
-      title: "Post Pour Inspection",
-      note: "Initial post-pour visual inspection.",
-      fields: [
-        { id: "date", label: "Inspection Date", type: "date" },
-        { id: "inspector", label: "Inspector / Supervisor", type: "text", placeholder: "Enter name" },
-        checklistField("surface_condition_acceptable", "Surface condition acceptable"),
-        checklistField("no_significant_defects", "No significant defects visible"),
-        checklistField("edges_interfaces_acceptable", "Edges and interfaces acceptable"),
-        checklistField("general_finish_acceptable", "General finish acceptable"),
-        {
-          id: "status",
-          label: "Result",
-          type: "select",
-          options: ["pass", "fail"],
-          labels: { pass: "Pass", fail: "Fail" }
-        },
-        {
-          id: "checks",
-          label: "Inspection Notes",
-          type: "textarea",
-          rows: 5,
-          full: true,
-          placeholder: "Record post-pour condition, defects or observations."
-        },
-        {
-          id: "followUp",
-          label: "Actions / Follow-Up",
-          type: "textarea",
-          rows: 4,
-          full: true,
-          placeholder: "Record remedial action or monitoring requirements."
-        }
-      ]
-    },
-    {
-      code: "F09",
-      title: "Material Delivery Log",
-      note: "Material receipt and delivery verification.",
-      fields: [
-        { id: "date", label: "Delivery Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "deliveryRef", label: "Delivery / Ticket Ref", type: "text", placeholder: "Enter delivery note / ticket ref" },
-        { id: "materialType", label: "Material Type", type: "text", placeholder: "Enter material description" },
-        checklistField("materials_match_order", "Materials match order / approval"),
-        checklistField("materials_in_good_condition", "Materials received in acceptable condition"),
-        checklistField("delivery_documentation_present", "Delivery documentation present"),
-        checklistField("traceability_checked", "Traceability checked"),
-        {
-          id: "status",
-          label: "Delivery Status",
-          type: "select",
-          options: ["pass", "fail"],
-          labels: { pass: "Accepted", fail: "Rejected / Quarantined" }
-        },
-        {
-          id: "checks",
-          label: "Delivery Notes",
-          type: "textarea",
-          rows: 5,
-          full: true,
-          placeholder: "Record quantities, condition and traceability notes."
-        },
-        {
-          id: "followUp",
-          label: "Actions / Follow-Up",
-          type: "textarea",
-          rows: 4,
-          full: true,
-          placeholder: "Record rejection, quarantine or replacement action."
-        }
-      ]
-    },
-    {
-      code: "F10",
-      title: "Equipment Calibration Register",
-      note: "Equipment and calibration control.",
-      fields: [
-        { id: "date", label: "Check Date", type: "date" },
-        { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
-        { id: "deviceRef", label: "Equipment / Device Ref", type: "text", placeholder: "Enter equipment ID / serial no." },
-        checklistField("calibration_current", "Calibration current"),
-        checklistField("equipment_condition_acceptable", "Equipment condition acceptable"),
-        checklistField("equipment_suitable_for_use", "Equipment suitable for use"),
-        {
-          id: "status",
-          label: "Result",
-          type: "select",
-          options: ["pass", "fail"],
-          labels: { pass: "Compliant", fail: "Non-Compliant" }
-        },
-        {
-          id: "checks",
-          label: "Check Notes",
-          type: "textarea",
-          rows: 5,
-          full: true,
-          placeholder: "Record calibration status and equipment observations."
-        },
-        {
-          id: "followUp",
-          label: "Actions / Follow-Up",
-          type: "textarea",
-          rows: 4,
-          full: true,
-          placeholder: "Record replacement or escalation."
-        }
-      ]
-    },
-    {
-      code: "F11",
-      title: "QA Pack Index",
-      note: "Record of supporting QA information compiled for the area.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Review Date", type: "date" },
-        { id: "inspector", label: "Reviewed By", type: "text", placeholder: "Enter name" },
-        checklistField("benchmark_record_included", "Benchmark record included"),
-        checklistField("test_records_included", "Test records included"),
-        checklistField("delivery_records_included", "Delivery / material records included"),
-        checklistField("supporting_information_complete", "Supporting QA information complete"),
-        {
-          id: "status",
-          label: "Result",
-          type: "select",
-          options: ["pass", "hold", "fail"],
-          labels: { pass: "Complete", hold: "Hold Point", fail: "Incomplete" }
-        },
-        {
-          id: "checks",
-          label: "QA Pack Notes",
-          type: "textarea",
-          rows: 5,
-          full: true,
-          placeholder: "Record missing items, references or pack status."
-        },
-        {
-          id: "followUp",
-          label: "Actions / Follow-Up",
-          type: "textarea",
-          rows: 4,
-          full: true,
-          placeholder: "Record missing information or close-out actions."
-        }
-      ]
-    },
-    {
-      code: "F12",
-      title: "Area Handover Certificate",
-      note: "Area release / handover confirmation.",
-      hold: true,
-      fields: [
-        { id: "date", label: "Handover Date", type: "date" },
-        { id: "inspector", label: "Released By", type: "text", placeholder: "Enter name" },
-        checklistField("works_complete", "Works complete"),
-        checklistField("qa_records_complete", "QA records complete"),
-        checklistField("area_condition_acceptable", "Area condition acceptable"),
-        checklistField("ready_for_next_stage", "Ready for next stage / handover"),
-        {
-          id: "status",
-          label: "Result",
-          type: "select",
-          options: ["pass", "hold"],
-          labels: { pass: "Released", hold: "Hold Point" }
-        },
-        {
-          id: "checks",
-          label: "Handover Notes",
-          type: "textarea",
-          rows: 5,
-          full: true,
-          placeholder: "Record handover conditions, limitations or observations."
-        },
-        {
-          id: "followUp",
-          label: "Actions / Follow-Up",
-          type: "textarea",
-          rows: 4,
-          full: true,
-          placeholder: "Record residual items or handover actions."
-        }
-      ]
-    }
-  ],
+      {
+        id: "status",
+        label: "Result",
+        type: "select",
+        options: ["pass", "fail"],
+        labels: { pass: "Pass", fail: "Fail" }
+      },
+      {
+        id: "checks",
+        label: "Inspection Notes",
+        type: "textarea",
+        rows: 5,
+        full: true,
+        placeholder: "Record post-pour condition, visible defects or observations."
+      },
+      {
+        id: "followUp",
+        label: "Actions / Follow-Up",
+        type: "textarea",
+        rows: 4,
+        full: true,
+        placeholder: "Record remedial action or monitoring requirements."
+      }
+    ]
+  },
+  {
+    code: "F06",
+    title: "Curing Access Log",
+    note: "Curing and trafficking control during the protection period.",
+    fields: [
+      { id: "date", label: "Log Date", type: "date" },
+      { id: "inspector", label: "Supervisor", type: "text", placeholder: "Enter name" },
+
+      checklistField("curing_protection_intact", "Curing protection intact"),
+      checklistField("access_controlled", "Access controlled appropriately"),
+      checklistField("no_unauthorised_traffic", "No unauthorised trafficking observed"),
+      checklistField("area_condition_acceptable", "Area condition acceptable during cure"),
+
+      {
+        id: "status",
+        label: "Overall Result",
+        type: "select",
+        options: ["pass", "fail"],
+        labels: { pass: "Acceptable", fail: "Issue Identified" }
+      },
+      {
+        id: "checks",
+        label: "Log Notes",
+        type: "textarea",
+        rows: 5,
+        full: true,
+        placeholder: "Record curing condition, access control and observations."
+      },
+      {
+        id: "followUp",
+        label: "Actions / Follow-Up",
+        type: "textarea",
+        rows: 4,
+        full: true,
+        placeholder: "Record access control or remedial action."
+      }
+    ]
+  },
+  {
+    code: "F07",
+    title: "Surface Regularity Test",
+    note: "Surface regularity testing to confirm compliance with specified SR class.",
+    hold: true,
+    fields: [
+      { id: "date", label: "Test Date", type: "date" },
+      { id: "inspector", label: "Tested By", type: "text", placeholder: "Enter name" },
+      { id: "areaRef", label: "Area Reference", type: "text", placeholder: "Plot / level / room / area" },
+      { id: "srClass", label: "Specified SR Class", type: "select", options: ["SR1", "SR2", "SR3"] },
+      { id: "sampleLocation", label: "Test Location", type: "text", placeholder: "Room / area / test point" },
+      { id: "resultValue", label: "Measured Deviation", type: "text", placeholder: "e.g. 3mm" },
+
+      checklistField("test_locations_representative", "Test locations representative"),
+      checklistField("straightedge_method_followed", "Straightedge method followed correctly"),
+      checklistField("results_checked_against_spec", "Results checked against specified SR class"),
+      checklistField("surface_ready_for_assessment", "Surface ready for assessment"),
+
+      {
+        id: "status",
+        label: "Result",
+        type: "select",
+        options: ["pass", "fail", "hold"],
+        labels: { pass: "Pass", fail: "Fail", hold: "Hold Point" }
+      },
+      {
+        id: "checks",
+        label: "Test Notes",
+        type: "textarea",
+        rows: 5,
+        full: true,
+        placeholder: "Record test locations, readings, worst result and acceptance basis."
+      },
+      {
+        id: "followUp",
+        label: "Actions / Follow-Up",
+        type: "textarea",
+        rows: 4,
+        full: true,
+        placeholder: "Record rectification, re-test requirements or approval action."
+      }
+    ]
+  },
+  {
+    code: "F08",
+    title: "Drop Hammer Test Record",
+    note: "BRE drop hammer / screed strength testing.",
+    fields: [
+      { id: "date", label: "Test Date", type: "date" },
+      { id: "inspector", label: "Tested By", type: "text", placeholder: "Enter name" },
+      { id: "deviceRef", label: "Device Ref", type: "text", placeholder: "BRE tester reference" },
+      { id: "sampleLocation", label: "Test Location", type: "text", placeholder: "Room / test point" },
+      { id: "resultValue", label: "Measured Result", type: "text", placeholder: "Enter reading / classification" },
+
+      checklistField("test_method_followed", "Test method followed correctly"),
+      checklistField("location_representative", "Representative location selected"),
+      checklistField("result_checked", "Result reviewed against requirement"),
+
+      {
+        id: "status",
+        label: "Result",
+        type: "select",
+        options: ["pass", "fail"],
+        labels: { pass: "Pass", fail: "Fail" }
+      },
+      {
+        id: "checks",
+        label: "Test Notes",
+        type: "textarea",
+        rows: 5,
+        full: true,
+        placeholder: "Record drop hammer results and any concerns."
+      },
+      {
+        id: "followUp",
+        label: "Actions / Follow-Up",
+        type: "textarea",
+        rows: 4,
+        full: true,
+        placeholder: "Record further testing or remedial action."
+      }
+    ]
+  },
+  {
+    code: "F09",
+    title: "Moisture Test Report",
+    note: "Moisture test and pre-finish release check.",
+    hold: true,
+    fields: [
+      { id: "date", label: "Test Date", type: "date" },
+      { id: "inspector", label: "Tested By", type: "text", placeholder: "Enter name" },
+      { id: "areaRef", label: "Area Reference", type: "text", placeholder: "Plot / level / room / area" },
+      { id: "deviceRef", label: "Device / Hygrometer Ref", type: "text", placeholder: "Enter device reference" },
+      { id: "sampleLocation", label: "Test Location", type: "text", placeholder: "Room / area / point" },
+      { id: "resultValue", label: "Measured RH / Moisture", type: "text", placeholder: "e.g. 75% RH" },
+      { id: "acceptanceCriteria", label: "Acceptance Criteria", type: "text", placeholder: "e.g. ≤ 75% RH" },
+
+      checklistField("device_verified_suitable", "Test device verified / suitable"),
+      checklistField("test_location_representative", "Test location representative"),
+      checklistField("test_procedure_followed", "Test procedure followed correctly"),
+      checklistField("result_checked_against_criteria", "Result checked against acceptance criteria"),
+      checklistField("area_suitable_for_release_review", "Area suitable for release review"),
+
+      {
+        id: "status",
+        label: "Result",
+        type: "select",
+        options: ["pass", "fail", "hold"],
+        labels: { pass: "Pass", fail: "Fail", hold: "Hold Point" }
+      },
+      {
+        id: "checks",
+        label: "Test Notes",
+        type: "textarea",
+        rows: 5,
+        full: true,
+        placeholder: "Record moisture readings, ambient conditions and suitability for finishes."
+      },
+      {
+        id: "followUp",
+        label: "Actions / Follow-Up",
+        type: "textarea",
+        rows: 4,
+        full: true,
+        placeholder: "Record drying, re-test or hold action."
+      }
+    ]
+  },
+  {
+    code: "F10",
+    title: "Equipment Calibration Register",
+    note: "Equipment and calibration control for screed QA/testing devices.",
+    fields: [
+      { id: "date", label: "Check Date", type: "date" },
+      { id: "inspector", label: "Checked By", type: "text", placeholder: "Enter name" },
+      { id: "deviceRef", label: "Equipment / Device Ref", type: "text", placeholder: "Enter equipment ID / serial no." },
+
+      checklistField("calibration_current", "Calibration current"),
+      checklistField("equipment_condition_acceptable", "Equipment condition acceptable"),
+      checklistField("equipment_suitable_for_use", "Equipment suitable for use"),
+
+      {
+        id: "status",
+        label: "Result",
+        type: "select",
+        options: ["pass", "fail"],
+        labels: { pass: "Compliant", fail: "Non-Compliant" }
+      },
+      {
+        id: "checks",
+        label: "Check Notes",
+        type: "textarea",
+        rows: 5,
+        full: true,
+        placeholder: "Record calibration status and equipment observations."
+      },
+      {
+        id: "followUp",
+        label: "Actions / Follow-Up",
+        type: "textarea",
+        rows: 4,
+        full: true,
+        placeholder: "Record replacement or escalation."
+      }
+    ]
+  },
+  {
+    code: "F11",
+    title: "QA Pack Index",
+    note: "Record of supporting QA information compiled for the area.",
+    fields: [
+      { id: "date", label: "Review Date", type: "date" },
+      { id: "inspector", label: "Reviewed By", type: "text", placeholder: "Enter name" },
+
+      checklistField("benchmark_record_included", "Benchmark record included"),
+      checklistField("test_records_included", "Test records included"),
+      checklistField("delivery_records_included", "Delivery / material records included"),
+      checklistField("supporting_information_complete", "Supporting QA information complete"),
+
+      {
+        id: "status",
+        label: "Result",
+        type: "select",
+        options: ["pass", "hold", "fail"],
+        labels: { pass: "Complete", hold: "Hold Point", fail: "Incomplete" }
+      },
+      {
+        id: "checks",
+        label: "QA Pack Notes",
+        type: "textarea",
+        rows: 5,
+        full: true,
+        placeholder: "Record missing items, references or pack status."
+      },
+      {
+        id: "followUp",
+        label: "Actions / Follow-Up",
+        type: "textarea",
+        rows: 4,
+        full: true,
+        placeholder: "Record missing information or close-out actions."
+      }
+    ]
+  },
+  {
+    code: "F12",
+    title: "Area Handover Certificate",
+    note: "Area release / handover confirmation following completion of screed QA.",
+    hold: true,
+    fields: [
+      { id: "date", label: "Handover Date", type: "date" },
+      { id: "inspector", label: "Released By", type: "text", placeholder: "Enter name" },
+
+      checklistField("works_complete", "Works complete"),
+      checklistField("qa_records_complete", "QA records complete"),
+      checklistField("area_condition_acceptable", "Area condition acceptable"),
+      checklistField("ready_for_next_stage", "Ready for next stage / handover"),
+
+      {
+        id: "status",
+        label: "Result",
+        type: "select",
+        options: ["pass", "hold"],
+        labels: { pass: "Released", hold: "Hold Point" }
+      },
+      {
+        id: "checks",
+        label: "Handover Notes",
+        type: "textarea",
+        rows: 5,
+        full: true,
+        placeholder: "Record handover conditions, limitations or observations."
+      },
+      {
+        id: "followUp",
+        label: "Actions / Follow-Up",
+        type: "textarea",
+        rows: 4,
+        full: true,
+        placeholder: "Record residual items or handover actions."
+      }
+    ]
+  }
+]
   cb: makeGenericScopeForms("Cradle & Batten"),
   raf: makeGenericScopeForms("Raised Access Floor"),
   hw: makeGenericScopeForms("Hardwood Flooring"),
