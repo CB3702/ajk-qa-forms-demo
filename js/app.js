@@ -55,7 +55,6 @@ function checklistField(id, label) {
 
 const FORM_LIBRARY = {
   screed: [
-screed: [
   {
     code: "F00",
     title: "Benchmark Acceptance",
@@ -606,7 +605,7 @@ screed: [
       }
     ]
   }
-]
+],
   cb: makeGenericScopeForms("Cradle & Batten"),
   raf: makeGenericScopeForms("Raised Access Floor"),
   hw: makeGenericScopeForms("Hardwood Flooring"),
